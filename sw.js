@@ -1,7 +1,7 @@
 /* Polidoro — service worker
    IMPORTANTE: a cada atualização do index.html, troque a versão abaixo
    (polidoro-v1.0.1, v1.0.2…). Assim os celulares recebem a versão nova. */
-const VERSAO = 'polidoro-v1.0.1';
+const VERSAO = 'polidoro-v1.2.0';
 const CACHE_CDN = 'polidoro-cdn';
 
 const ESSENCIAIS = ['./', './index.html', './manifest.json'];

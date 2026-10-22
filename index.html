@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-modo="escuro">
+<html lang="pt-BR" data-modo="claro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0F1720">
+<meta name="theme-color" content="#ECF0F3">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -38,6 +38,7 @@ html{
   --campo:color-mix(in srgb, rgb(var(--acRGB)) 4%, #F7F9F8);
   --ink:#14202E;--ink2:#536273;
   --linha:color-mix(in srgb, rgb(var(--acRGB)) 12%, #E1E6E3);--linha-forte:color-mix(in srgb, rgb(var(--acRGB)) 24%, #C4CDC9);
+  --av:#6D44B8;--av2:rgba(109,68,184,.11);
   --perigo:#B3392B;--perigo2:#FCEDEA;--perigo-borda:#F2CAC2;--ok:#1C7A4F;
   --alerta:#8F5300;--alerta2:#FFF4DE;--alerta-borda:#F0D398;
   --borda:1px solid var(--linha);--borda-tracejada:1.5px dashed var(--linha-forte);
@@ -48,6 +49,7 @@ html{
 html[data-modo=escuro]{
   --bg:#0F1720;--surf:#17222E;--surf2:#1E2B39;
   --ink:#E8EEF5;--ink2:#9AAABB;--linha:#263445;--linha-forte:#354659;
+  --av:#B99AF0;--av2:rgba(185,154,240,.16);
   --perigo:#E07B64;--perigo2:rgba(224,123,100,.16);--ok:#5FBF90;--alerta:#E7A54B;--alerta2:rgba(231,165,75,.15);
   --campo:#1E2B39;--perigo-borda:transparent;--alerta-borda:transparent;
   --sombra:0 2px 12px rgba(0,0,0,.3);--sombra-alta:0 10px 26px rgba(0,0,0,.45);--hover:rgba(255,255,255,.07);
@@ -128,6 +130,7 @@ p{margin:0}
 .chips.rola{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:0 16px}
 .chips.rola::-webkit-scrollbar{display:none}
 .selo{display:inline-flex;align-items:center;font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:var(--surf2);font-weight:800;color:var(--ink2);white-space:nowrap}
+.selo.av{background:var(--av2);color:var(--av)}.selo.av-serv{background:transparent;color:var(--ink2);text-transform:none;letter-spacing:0;font-weight:700;padding-left:2px;white-space:normal;text-align:left}
 .selo.ok{background:var(--ac2);color:var(--ac-forte)}.selo.alerta{background:var(--alerta2);color:var(--alerta);box-shadow:inset 0 0 0 1px var(--alerta-borda)}.selo.perigo{background:var(--perigo2);color:var(--perigo);box-shadow:inset 0 0 0 1px var(--perigo-borda)}
 .selos{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
 
@@ -152,6 +155,21 @@ p{margin:0}
 .dia.hoje{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}
 .dia.sel{background:var(--ac);color:var(--ac-ink);border-color:transparent;box-shadow:0 3px 12px rgba(var(--acRGB),.3)}
 .dia.sel .pontos i{background:var(--ac-ink)}
+.dia .pontos i.av{background:var(--av)}
+.cal{background:var(--surf);border:var(--borda);border-radius:var(--r);box-shadow:var(--sombra);padding:10px 8px 12px}
+.cal-cab,.cal-grade{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-cab span{text-align:center;font-size:.62rem;font-weight:800;text-transform:uppercase;opacity:.5;padding:2px 0 6px}
+.cel{position:relative;min-height:60px;border-radius:12px;padding:6px 2px 5px;display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--surf2);border:1px solid transparent}
+.cel.fora{visibility:hidden}.cel.livre{background:transparent;border-color:var(--linha)}.cel.passado{opacity:.62}
+.cel .n{font-family:var(--fd);font-size:1.3rem;font-weight:700;line-height:1}
+.cel.hoje{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac);opacity:1}.cel.hoje .n{color:var(--ac)}
+.cel .cont{display:flex;gap:2px;flex-wrap:wrap;justify-content:center}
+.pm,.pa{display:inline-grid;place-items:center;min-width:17px;height:16px;padding:0 4px;border-radius:99px;font-size:.62rem;font-weight:800;font-style:normal;line-height:1}
+.pm{background:var(--ac2);color:var(--ac-forte)}.pa{background:var(--av2);color:var(--av)}
+.est{position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;display:grid;place-items:center;font-style:normal}
+.est.ok{background:var(--ok);color:#fff}.est.ok svg{width:10px;height:10px;stroke-width:3}.est.falta{width:8px;height:8px;top:5px;right:5px;background:var(--perigo)}
+.legenda{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:12px;font-size:.72rem;color:var(--ink2)}
+.legenda span{display:inline-flex;align-items:center;gap:5px}.legenda .est{position:static}
 
 /* ---- cartões ---- */
 .cartao{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:var(--r);background:var(--surf);border:var(--borda);box-shadow:var(--sombra);margin-bottom:9px;text-align:left;width:100%;cursor:pointer;transition:transform .12s,box-shadow .12s}
@@ -161,6 +179,7 @@ p{margin:0}
 .cartao h3{font-family:var(--ff);font-size:.98rem;font-weight:700;line-height:1.3}
 .marcador{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--linha-forte);display:grid;place-items:center;font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--ac)}
 .marcador .i{width:16px;height:16px}
+.cartao.avulso .marcador{border-color:var(--av);color:var(--av)}.cartao.avulso{border-left:3px solid var(--av)}
 .cartao.feito .marcador{background:var(--ac);color:var(--ac-ink);border-color:var(--ac)}
 .cartao.feito .cartao-txt{opacity:.6}
 .cartao.inativo{opacity:.5}
@@ -282,6 +301,38 @@ html[data-modo=escuro] .recibo .rhd{border-color:rgb(var(--acRGB))}
 .recibo .rass .assin{font-family:var(--fd);font-size:1.8rem;line-height:1}
 .recibo .rass hr{border:0;border-top:1px solid #555;width:70%;margin:2px auto 4px}
 #printArea{display:none}
+.stepper{display:flex;align-items:center;gap:4px;margin:4px 0 2px}.stepper input{text-align:center;margin:0!important;padding:6px 2px!important}
+.stepper button{flex:none;width:38px;height:44px;border-radius:12px;background:var(--surf);border:var(--borda);font-size:1.35rem;font-weight:700;color:var(--ac);line-height:1}
+.stepper button:active{background:var(--ac2)}
+.etapa.oculta{display:none}
+.etapas-prog{margin:-4px 2px 14px}.etapas-barra{display:flex;gap:6px;margin-bottom:6px}.etapas-barra button{flex:1;height:7px;border-radius:9px;background:var(--surf2);border:0}
+.etapas-barra button.feita{background:color-mix(in srgb,var(--ac) 55%,transparent)}.etapas-barra button.atual{background:var(--ac)}
+.etapa-nav{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}.etapa-nav .btn{padding:14px 18px;font-size:1rem}
+.checks{display:flex;flex-direction:column;gap:8px}
+.chk{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px;border-radius:16px;background:var(--surf);border:var(--borda);font-size:.98rem;font-weight:700;box-shadow:var(--sombra)}
+.chk .cx{width:28px;height:28px;border-radius:9px;border:2px solid var(--linha-forte);display:grid;place-items:center;flex:none;color:transparent}
+.chk .cx .i{width:17px;height:17px;stroke-width:3}.chk.on{background:var(--ac2);border-color:transparent}.chk.on .cx{background:var(--ac);border-color:var(--ac);color:var(--ac-ink)}
+.chk-lista{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.88rem}.chk-lista span{display:inline-flex;align-items:center;gap:5px}.chk-lista .i{width:15px;height:15px;color:var(--ok);stroke-width:2.6}
+.cartao.remarcado{opacity:.6}.cartao.remarcado .marcador{border-style:dashed;color:var(--av)}.cartao.remarcado .marcador .i{width:15px;height:15px}
+.cel.sel{background:var(--ac);color:var(--ac-ink);opacity:1;box-shadow:0 3px 12px rgba(var(--acRGB),.3)}.cel.sel .n{color:var(--ac-ink)}.cel.sel .pm,.cel.sel .pa{background:rgba(255,255,255,.25);color:var(--ac-ink)}
+.barra-lucro{height:5px;border-radius:9px;background:color-mix(in srgb,var(--ok) 30%,transparent);overflow:hidden;margin-top:7px}.barra-lucro i{display:block;height:100%;background:var(--alerta)}
+/* relatório mensal (impressão) */
+.rel{font-family:var(--ff);color:#14202E;background:#fff;font-size:12.5px;line-height:1.45}
+.rel-hd{display:flex;align-items:center;gap:14px;padding-bottom:12px;border-bottom:3px solid #2462BC;margin-bottom:14px}
+.rel-marca svg{width:52px;height:52px;display:block}.rel-emp{flex:1}.rel-nome{font-family:var(--fd);font-size:30px;line-height:1}.rel-mt{color:#5A6878;font-size:11px;margin-top:3px}
+.rel-tit{text-align:right;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#5A6878;font-weight:800}.rel-tit b{display:block;font-family:var(--fd);font-size:26px;letter-spacing:0;text-transform:none;color:#2462BC;line-height:1.1}
+.rel-cli{display:grid;grid-template-columns:1.2fr 1.6fr 1fr;gap:10px;background:#F1F4F8;border-radius:10px;padding:10px 12px;margin-bottom:12px}.rel-cli span{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;color:#5A6878;font-weight:800}
+.rel-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}.rel-kpis div{border:1px solid #DCE3EC;border-radius:10px;padding:8px;text-align:center;color:#5A6878;font-size:10.5px}.rel-kpis b{display:block;font-family:var(--fd);font-size:26px;color:#2462BC;line-height:1}
+.rel-tab{width:100%;border-collapse:collapse}.rel-tab th{background:#2462BC;color:#fff;font-size:10px;text-transform:uppercase;letter-spacing:.06em;text-align:left;padding:6px 8px}
+.rel-tab td{padding:7px 8px;border-bottom:1px solid #E3E9F1;vertical-align:top}.rel-tab small{color:#5A6878}.rel-tab tr{page-break-inside:avoid}
+.rel-sub td{border-bottom:1px solid #C9D3E0;padding-top:0;font-size:11px;color:#3D4A5A}.rel-chk{color:#1C7A4F;font-weight:700}.rel-obs{margin-top:2px}
+.fora{color:#A35F00;font-weight:800;background:#FFF1D6;padding:0 4px;border-radius:4px}
+.rel-nota{font-size:10.5px;color:#5A6878;margin:8px 0 0}
+.rel-h2{font-family:var(--fd);font-size:24px;margin:20px 0 8px;page-break-after:avoid}
+.rel-fotos{page-break-inside:avoid;margin-bottom:12px}.rel-fdata{font-weight:800;font-size:11px;margin-bottom:5px}
+.rel-fpar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rel-fpar figure{margin:0}.rel-fpar img{width:100%;height:62mm;object-fit:cover;border-radius:8px;display:block}.rel-fpar figcaption{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#5A6878;margin-top:3px}
+.rel-pe{display:flex;justify-content:space-between;align-items:flex-end;margin-top:26px;page-break-inside:avoid}.rel-ass{text-align:center;width:60%}.rel-assin{font-family:var(--fd);font-size:28px;line-height:1}.rel-ass hr{border:0;border-top:1px solid #555;margin:2px 0 4px}.rel-gerado{font-size:10.5px;color:#5A6878}
+@media print{@page{size:A4;margin:12mm}body.print-rel{background:#fff!important;background-image:none!important}}
 @media print{body.printing>*:not(#printArea){display:none!important}body.printing #printArea{display:block}body.printing{background:#fff}#printArea .recibo{box-shadow:none}}
 </style>
 </head>
@@ -310,12 +361,12 @@ html[data-modo=escuro] .recibo .rhd{border-color:rgb(var(--acRGB))}
    Enquanto estiver com COLE_AQUI, o app funciona só no aparelho.
    ===================================================================== */
 const FIREBASE_CONFIG={
-  apiKey:'AIzaSyB7L23HLNsS5PO2uVGej6ntHlZQRwLChKQ',
-  authDomain:'polidorolimpeza.firebaseapp.com',
-  projectId:'polidorolimpeza',
-  storageBucket:'polidorolimpeza.firebasestorage.app',
-  messagingSenderId:'556006055656',
-  appId:'1:556006055656:web:47cc4fb1a07dce5958f35d'
+  apiKey:'COLE_AQUI',
+  authDomain:'COLE_AQUI.firebaseapp.com',
+  projectId:'COLE_AQUI',
+  storageBucket:'COLE_AQUI.appspot.com',
+  messagingSenderId:'COLE_AQUI',
+  appId:'COLE_AQUI'
 };
 /* ============ utilitários ============ */
 const $=(s,e=document)=>e.querySelector(s);
@@ -329,7 +380,7 @@ const brl=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL
 const num=v=>{if(v==null)return null;let s=String(v).trim();if(!s)return null;if(s.includes(',')&&s.includes('.'))s=s.replace(/\./g,'');s=s.replace(',','.');const n=parseFloat(s);return isNaN(n)?null:n;};
 const numIn=v=>v==null||v===''?'':String(v).replace('.',',');
 const soDig=s=>String(s||'').replace(/\D/g,'');
-const primeiro=n=>String(n||'').trim().split(/\s+/)[0]||'';
+const primeiro=n=>{const t=String(n||'').trim();return /^(condom[ií]nio|pousada|hotel|clube|academia|ch[aá]cara|s[ií]tio|residencial|edif[ií]cio|escola|col[eé]gio|associa[cç][aã]o|rancho|fazenda)\b/i.test(t)?t:(t.split(/\s+/)[0]||'');};
 const iniciais=n=>String(n||'?').trim().split(/\s+/).slice(0,2).map(p=>p[0]).join('').toUpperCase();
 const slug=s=>String(s||'cliente').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const byNome=(a,b)=>a.nome.localeCompare(b.nome,'pt-BR');
@@ -380,6 +431,7 @@ const IC={
   navegar:'<path d="M20 4 3.6 10.9l6.9 2.6 2.6 6.9z"/>',
   nuvem:'<path d="M7 18.5h10.2a4.1 4.1 0 0 0 .5-8.2 5.6 5.6 0 0 0-10.9-1.2A4.7 4.7 0 0 0 7 18.5z"/>',
   nuvemx:'<path d="M7 18.5h10.2a4.1 4.1 0 0 0 .5-8.2 5.6 5.6 0 0 0-10.9-1.2A4.7 4.7 0 0 0 7 18.5z"/><path d="M10 11.5l4 4M14 11.5l-4 4"/>',
+  calendario:'<rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 10h17M8 3.5v3M16 3.5v3"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17.2h.01M12 17.2h.01" stroke-width="2.4"/>',
   casa:'<path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/>',
   nascer:'<path d="M3 18.5h18M6.5 18.5a5.5 5.5 0 0 1 11 0M12 4.5v3M4.6 10.4l2 1.3M19.4 10.4l-2 1.3M9.5 7l2.5-2.5L14.5 7"/>',
   lua:'<path d="M19.5 14.6A7.6 7.6 0 0 1 9.4 4.5a7.6 7.6 0 1 0 10.1 10.1z"/>',
@@ -398,7 +450,7 @@ const MARCA='<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><rect x
 /* ============ dados ============ */
 const KEY='polidoro_v1',KEY_ANTIGA='piscinaEmDia_v1';
 const AZUL=[36,98,188,'#1A4787'];
-const DEF_CFG={nome:'Polidoro',responsavel:'',cnpj:'',tel:'',cidade:'',pix:'',pixNome:'',logo:'',modo:'escuro',
+const DEF_CFG={nome:'Polidoro',responsavel:'',cnpj:'',tel:'',cidade:'',pix:'',pixNome:'',modo:'claro',modoV:2,visitaEtapas:true,checklist:['Peneirou a superfície','Escovou paredes e piso','Aspirou o fundo','Limpou skimmer e cestos','Retrolavou o filtro','Limpou as bordas'],
   fat:{alc:17,alcAlvo:100,dur:15,durAlvo:250,etapaDur:50,cloroConc:65,cloroAlvo:2,phAlvo:7.4,phMais:5,phMenos:5,algicida:6}};
 const FAT_DEF=[
   ['alc','Bicarbonato: g por m³ para subir 10 ppm de alcalinidade','g'],
@@ -429,7 +481,8 @@ function seedEstoque(){return [
   {id:uid(),nome:'Clarificante',tipo:'clarificante',un:'L',qtd:0,min:1},
   {id:uid(),nome:'Sulfato de alumínio',tipo:'outro',un:'kg',qtd:0,min:2}];}
 function migrate(d){d=d||{};d.cfg=Object.assign({},DEF_CFG,d.cfg||{});d.cfg.fat=Object.assign({},DEF_CFG.fat,d.cfg.fat||{});
-  ['clientes','visitas','estoque','movs','pagamentos'].forEach(k=>{if(!Array.isArray(d[k]))d[k]=k==='estoque'?seedEstoque():[];});
+  delete d.cfg.logo;if(d.cfg.modoV!==2){d.cfg.modo='claro';d.cfg.modoV=2;}
+  ['clientes','visitas','estoque','movs','pagamentos','agenda'].forEach(k=>{if(!Array.isArray(d[k]))d[k]=k==='estoque'?seedEstoque():[];});
   if(!d.cfg.nome||d.cfg.nome==='Piscina '+'em Dia')d.cfg.nome='Polidoro';
   d.seqRecibo=d.seqRecibo||1;return d;}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(KEY_ANTIGA));if(d)return migrate(d);}catch(e){}return migrate({});}
@@ -444,11 +497,11 @@ const enderecoCompleto=c=>[c.endereco,c.bairro,DB.cfg.cidade].filter(Boolean).jo
 function waLink(tel,txt){let d=soDig(tel).replace(/^0+/,'');if(d&&d.length<=11)d='55'+d;return 'https://wa.me/'+d+'?text='+encodeURIComponent(txt);}
 
 /* ============ tema ============ */
-function aplicaTema(){const r=document.documentElement;r.dataset.modo=DB.cfg.modo||'escuro';const esc_=r.dataset.modo==='escuro';
+function aplicaTema(){const r=document.documentElement;r.dataset.modo=DB.cfg.modo||'claro';const esc_=r.dataset.modo==='escuro';
   const bt=$('#btnTema');if(bt){bt.innerHTML=ic(esc_?'sol':'lua');bt.setAttribute('aria-label',esc_?'Mudar para o modo claro':'Mudar para o modo escuro');bt.title=bt.getAttribute('aria-label');}
   const m=$('meta[name=theme-color]');if(m)m.content=r.dataset.modo==='escuro'?'#0F1720':'#'+paleta().slice(0,3).map((c,i)=>Math.round(c*.05+[247,248,246][i]*.95).toString(16).padStart(2,'0')).join('');
   $('#marcaNome').textContent=DB.cfg.nome||'Polidoro';
-  $('#marcaIco').innerHTML=DB.cfg.logo?`<img src="${DB.cfg.logo}" alt="" style="width:34px;height:34px;border-radius:10px;object-fit:contain;background:#fff">`:MARCA;}
+  $('#marcaIco').innerHTML=MARCA;}
 const paleta=()=>AZUL;
 const acRGBs=()=>paleta().slice(0,3).join(',');
 const acClaro=()=>'#'+paleta().slice(0,3).map(c=>Math.round(c*.70+255*.30).toString(16).padStart(2,'0')).join('');
@@ -541,7 +594,8 @@ const pagMes=(cid,ym)=>DB.pagamentos.find(p=>p.clienteId===cid&&p.ref===ym);
 function statusMes(c,ym){if(pagMes(c.id,ym))return 'pago';const now=ymNow();if(ym<now)return 'atrasado';if(ym>now)return 'futuro';
   return new Date().getDate()>(c.venc||10)?'atrasado':'pendente';}
 function atrasos(){const now=ymNow(),out=[];DB.clientes.forEach(c=>{if(c.ativo===false||!(c.mensal>0))return;
-  for(let k=-3;k<=0;k++){const ym=addMes(now,k);if(ym<(c.desde||'0000'))continue;if(statusMes(c,ym)==='atrasado')out.push({c,ym,valor:c.mensal});}});return out;}
+  for(let k=-3;k<=0;k++){const ym=addMes(now,k);if(ym<(c.desde||'0000'))continue;if(statusMes(c,ym)==='atrasado')out.push({c,ym,valor:c.mensal});}});
+  DB.agenda.forEach(a=>{const c=cli(a.clienteId);if(c&&stPagAv(a)==='atrasado')out.push({c,ym:null,valor:a.valor,a});});return out;}
 const seloStatus=st=>({pago:'<span class="selo ok">pago</span>',pendente:'<span class="selo alerta">a vencer</span>',atrasado:'<span class="selo perigo">atrasado</span>',futuro:'<span class="selo">próximo mês</span>'}[st]||'');
 
 /* ============ interface base ============ */
@@ -552,7 +606,7 @@ const sheetAberta=()=>$('#folha').classList.contains('open');
 const cab=(t,acao='',eb='')=>`<div class="cabeca"><div style="min-width:0">${eb?`<div class="eyebrow">${eb}</div>`:''}<h1 class="ell">${t}</h1></div>${acao}</div>`;
 const secTopo=(t,extra='')=>`<div class="secao-topo"><h2>${t}</h2>${extra}</div>`;
 const vazio=(t,p,btn='')=>`<div class="vazio"><h3>${t}</h3><p>${p}</p>${btn}</div>`;
-const ABAS=[['inicio','Início','casa'],['hoje','Rota','rota'],['clientes','Clientes','clientes'],['calc','Calcular','calc'],['estoque','Estoque','estoque'],['financeiro','Financeiro','financeiro']];
+const ABAS=[['inicio','Início','casa'],['hoje','Agenda','calendario'],['clientes','Clientes','clientes'],['calc','Calcular','calc'],['estoque','Estoque','estoque'],['financeiro','Financeiro','financeiro']];
 const VIEWS={};let STACK=[{name:'inicio',params:{}}];let RT=0;
 const V=h=>{$('#vista').innerHTML=h;};
 function go(name,params={},replace=false){if(replace)STACK[STACK.length-1]={name,params};else{STACK.push({name,params});history.pushState({d:STACK.length},'');}render(!replace);if(!replace)window.scrollTo(0,0);}
@@ -568,10 +622,10 @@ function render(anima){RT++;Nuvem.renderPend=false;freeURLs();document.body.clas
   (VIEWS[v.name]||VIEWS.inicio)(v.params||{});}
 
 function avisosHTML(){let h='';const baixos=DB.estoque.filter(i=>i.min>0&&i.qtd<i.min);
-  baixos.slice(0,3).forEach(i=>{h+=`<button class="aviso alerta" onclick="tab('estoque')">${ic('alerta')}<p><b>Atenção:</b> seu estoque de ${esc(i.nome)} está ${i.qtd<=0?'zerado':'abaixo de '+trimN(i.min)+' '+i.un}. Hora de repor.</p></button>`;});
-  if(baixos.length>3)h+=`<button class="aviso alerta" onclick="tab('estoque')">${ic('alerta')}<p>Mais ${baixos.length-3} produto(s) com estoque baixo.</p></button>`;
+  if(baixos.length===1){const i=baixos[0];h+=`<button class="aviso alerta" onclick="tab('estoque')">${ic('alerta')}<p><b>Atenção:</b> seu estoque de ${esc(i.nome)} está ${i.qtd<=0?'zerado':'abaixo de '+trimN(i.min)+' '+i.un}. Hora de repor.</p></button>`;}
+  else if(baixos.length>1)h+=`<button class="aviso alerta" onclick="tab('estoque')">${ic('alerta')}<p><b>Repor estoque:</b> ${baixos.slice(0,4).map(i=>esc(i.nome)+(i.qtd<=0?' (zerado)':'')).join(', ')}${baixos.length>4?` e mais ${baixos.length-4}`:''}.</p></button>`;
   const at=atrasos();if(at.length){const tot=at.reduce((s,a)=>s+a.valor,0);
-    h+=`<button class="aviso perigo" onclick="tab('financeiro')">${ic('moeda')}<p><b>${at.length} mensalidade(s) em atraso</b> · ${brl(tot)}<br>Toque para ver e cobrar pelo WhatsApp.</p></button>`;}
+    h+=`<button class="aviso perigo" onclick="tab('financeiro')">${ic('moeda')}<p><b>${at.length} cobrança(s) em atraso</b> · ${brl(tot)}<br>Toque para ver e cobrar pelo WhatsApp.</p></button>`;}
   return h;}
 function dataBloco(iso){const d=parseD(iso);return `<span class="data-bloco"><b>${d.getDate()}</b><span>${MESC[d.getMonth()]}</span></span>`;}
 function selosMed(v){const it=[['pH',v.ph,'ph',''],['Cloro',v.cloro,'cloro',' ppm'],['Alc.',v.alc,'alc',' ppm'],['Dureza',v.dur,'dur',' ppm']].filter(x=>x[1]!=null);
@@ -580,20 +634,44 @@ function selosMed(v){const it=[['pH',v.ph,'ph',''],['Cloro',v.cloro,'cloro',' pp
 function itemVisitaHTML(v,comCliente){const c=cli(v.clienteId);
   return `<button class="cartao" onclick="go('visitaVer',{id:'${v.id}'})">${dataBloco(v.data)}<div class="cartao-txt"><h3 class="ell">${comCliente?esc(c?.nome||'Cliente removido'):'Tratamento às '+fmtHora(v.data)}</h3>${v.produtos?.length?`<div class="meta ell">${esc(v.produtos.map(p=>fmtQ(p.qtd,p.un)+' '+p.nome).join(' + '))}</div>`:''}<div class="selos">${selosMed(v)}${v.nFotos?`<span class="selo">${v.nFotos} foto(s)</span>`:''}</div></div></button>`;}
 
-/* ============ ROTA DO DIA ============ */
-VIEWS.hoje=p=>{const hojeISO=isoDate(new Date());const data=p.data||hojeISO;const d0=parseD(data);const dow=d0.getDay();const ehHoje=data===hojeISO;
-  document.title='Rota · Polidoro';
-  if(!DB.clientes.length){V(cab('Rota')+vazio('Sem clientes','Cadastre clientes com os dias de visita para montar a rota.',`<button class="btn" onclick="go('clienteForm')">${ic('mais')}Cadastrar cliente</button>`));return;}
-  const lista=naRota(dow);const feitos=lista.filter(c=>visitaDoDia(c.id,data));
+/* ============ AGENDA (rota do dia + calendário do mês + avulsos) ============ */
+const SERVICOS=['Limpeza avulsa','Recuperação de piscina verde','Tratamento de choque','Aspiração e limpeza completa','Troca de areia do filtro','Manutenção de bomba e filtro','Limpeza de bordas e azulejos'];
+let AG_MODO='dia';
+const horaMin=h=>{if(!h)return 1439;const [a,b]=String(h).split(':').map(Number);return a*60+(b||0);};
+const avulsosDia=iso=>DB.agenda.filter(a=>a.data===iso&&a.status!=='cancelado'&&cli(a.clienteId));
+function itensDia(iso){const dow=parseD(iso).getDay();
+  const out=naRota(dow).filter(c=>!c.criado||c.criado.slice(0,10)<=iso).map((c,k)=>({c,a:null,av:false,k}));
+  avulsosDia(iso).sort((x,y)=>horaMin(x.hora)-horaMin(y.hora)).forEach((a,i)=>{const ex=out.find(x=>x.c.id===a.clienteId);if(ex){ex.a=a;return;}
+    out.push({c:cli(a.clienteId),a,av:true,k:a.pos!=null?a.pos:500+i});});
+  out.forEach(x=>{if(!x.a){const r=DB.agenda.find(a=>a.clienteId===x.c.id&&a.remDe===iso&&a.status!=='cancelado');if(r)x.rem=r;}});
+  return out.sort((x,y)=>x.k-y.k);}
+const avMap=iso=>new Map(avulsosDia(iso).map(a=>[a.clienteId,a]));
+function stAv(a){if(a.status==='cancelado')return 'cancelado';if(visitaDoDia(a.clienteId,a.data))return 'feito';return a.data<isoDate(new Date())?'faltou':'agendado';}
+const pagAv=a=>DB.pagamentos.find(p=>p.agendaId===a.id);
+function stPagAv(a){if(a.status==='cancelado'||!(a.valor>0))return '';if(pagAv(a))return 'pago';const h=isoDate(new Date());return a.data>h?'futuro':a.data===h?'pendente':'atrasado';}
+const SELO_AV={agendado:'<span class="selo av">agendado</span>',feito:'<span class="selo ok">feito</span>',faltou:'<span class="selo perigo">não feito</span>',cancelado:'<span class="selo">cancelado</span>'};
+const seloPag=sp=>({pago:'<span class="selo ok">pago</span>',pendente:'<span class="selo alerta">receber hoje</span>',atrasado:'<span class="selo perigo">a receber</span>'}[sp]||'');
+const seloAvulso=a=>`<span class="selo av">avulso${a.hora?' · '+a.hora:''}</span>`;
+function avCardHTML(a){const c=cli(a.clienteId);
+  return `<button class="cartao" onclick="go('agendaForm',{id:'${a.id}'})">${dataBloco(a.data)}<div class="cartao-txt"><h3 class="ell">${esc(c?.nome||'')}</h3><div class="meta ell">${a.hora?a.hora+' · ':''}${esc(a.servico||'Serviço avulso')}</div><div class="selos">${SELO_AV[stAv(a)]}${seloPag(stPagAv(a))}</div></div>${a.valor>0?`<b style="white-space:nowrap">${brl(a.valor)}</b>`:''}</button>`;}
+function agTopo(modo,titulo,eyebrow,data,extra=''){
+  return cab(titulo,`<div style="display:flex;gap:6px;flex:none">${extra}<button class="btn mini" onclick="go('agendaForm',{data:'${data||''}'})">${ic('mais')}Agendar</button></div>`,eyebrow)+
+  `<div class="abas" style="margin-top:0"><button class="${modo==='dia'?'on':''}" onclick="AG_MODO='dia';go('hoje',{},true)">${ic('rota')}Dia</button><button class="${modo==='mes'?'on':''}" onclick="AG_MODO='mes';go('hoje',{mes:1},true)">${ic('calendario')}Mês</button></div>`;}
+
+VIEWS.hoje=p=>{const hojeISO=isoDate(new Date());document.title='Agenda · Polidoro';
+  if(p.mes||(!p.data&&AG_MODO==='mes')){AG_MODO='mes';return agendaMes(p);}AG_MODO='dia';
+  const data=p.data||hojeISO;const d0=parseD(data);const dow=d0.getDay();const ehHoje=data===hojeISO;
+  let h=agTopo('dia',ehHoje?'Rota de hoje':'Rota de '+DIASL[dow].split('-')[0].toLowerCase(),`${DIASL[dow]}, ${dataLonga(data)}`,data,ehHoje?'':`<button class="btn mini ghost" onclick="go('hoje',{},true)">Hoje</button>`);
+  if(!DB.clientes.length){V(h+vazio('Sem clientes','Cadastre clientes com os dias de visita ou agende um atendimento avulso.',`<button class="btn" onclick="go('clienteForm')">${ic('mais')}Cadastrar cliente</button>`));return;}
+  const itensT=itensDia(data);const itens=itensT;const lista=itensT.filter(x=>!x.rem).map(x=>x.c);const feitos=lista.filter(c=>visitaDoDia(c.id,data));
   const extras=DB.visitas.filter(v=>v.data.slice(0,10)===data&&!lista.some(c=>c.id===v.clienteId));
-  let h=cab(ehHoje?'Rota de hoje':'Rota de '+DIASL[dow].split('-')[0].toLowerCase(),!ehHoje?`<button class="btn mini ghost" onclick="go('hoje',{},true)">Hoje</button>`:'',`${DIASL[dow]}, ${dataLonga(data)}`);
   const ini=new Date(d0);ini.setDate(d0.getDate()-dow);const fim=new Date(ini);fim.setDate(ini.getDate()+6);
   const semTxt=ini.getMonth()===fim.getMonth()?`${ini.getDate()} a ${fim.getDate()} de ${MESES[fim.getMonth()]}`:`${ini.getDate()} ${MESC[ini.getMonth()]} a ${fim.getDate()} ${MESC[fim.getMonth()]}`;
   h+=`<div class="mes-topo"><button class="ico caixa" onclick="mudarDia('${data}',-7)" aria-label="Semana anterior">${ic('esq')}</button><h2>${semTxt}</h2><button class="ico caixa" onclick="mudarDia('${data}',7)" aria-label="Próxima semana">${ic('dir')}</button></div><div class="semana">`;
-  for(let k=0;k<7;k++){const di=new Date(ini);di.setDate(ini.getDate()+k);const iso=isoDate(di);const n=naRota(k).length;
-    h+=`<button class="dia ${iso===hojeISO?'hoje':''} ${iso===data?'sel':''}" onclick="go('hoje',{data:'${iso}'},true)"><span class="ds">${DIAS[k]}</span><span class="dn">${di.getDate()}</span><span class="pontos">${'<i></i>'.repeat(Math.min(n,4))}</span></button>`;}
+  for(let k=0;k<7;k++){const di=new Date(ini);di.setDate(ini.getDate()+k);const iso=isoDate(di);const it=itensDia(iso).filter(x=>!x.rem);const nr=it.filter(x=>!x.av).length,na=it.filter(x=>x.a).length;
+    h+=`<button class="dia ${iso===hojeISO?'hoje':''} ${iso===data?'sel':''}" onclick="go('hoje',{data:'${iso}'},true)"><span class="ds">${DIAS[k]}</span><span class="dn">${di.getDate()}</span><span class="pontos">${'<i></i>'.repeat(Math.min(nr,4))}${'<i class="av"></i>'.repeat(Math.min(na,2))}</span></button>`;}
   h+=`</div>`;
-  if(lista.length)h+=`<div class="cartao lista"><div style="display:flex;justify-content:space-between;gap:8px" class="meta"><span>${feitos.length} de ${lista.length} tratadas</span><span>${fmtN(lista.reduce((s,c)=>s+(c.m3||0),0))} m³ · ${esc(regioesDe(lista).join(', '))}</span></div><div class="prog"><i style="width:${feitos.length/lista.length*100}%"></i></div></div>`;
+  if(lista.length)h+=`<div class="cartao lista"><div style="display:flex;justify-content:space-between;gap:8px" class="meta"><span>${feitos.length} de ${lista.length} tratadas</span><span>${fmtN(lista.reduce((s,c)=>s+(c.m3||0),0))} m³${regioesDe(lista).length?' · '+esc(regioesDe(lista).join(', ')):''}</span></div><div class="prog"><i style="width:${feitos.length/lista.length*100}%"></i></div></div>`;
   const pend=lista.filter(c=>!visitaDoDia(c.id,data)&&(c.endereco||c.bairro));
   const comEnd=lista.filter(c=>c.endereco||c.bairro);
   if(comEnd.length){let modo=MAPA_MODO;if(modo==='pendentes'&&!pend.length)modo='todas';const pts=modo==='pendentes'?pend:comEnd;
@@ -602,39 +680,147 @@ VIEWS.hoje=p=>{const hojeISO=isoDate(new Date());const data=p.data||hojeISO;cons
     <button class="btn bloco" style="margin-top:10px" onclick="abrirRota('${data}','${modo}')">${ic('navegar')}Navegar com o Google Maps</button>
     <p class="dica">Abre o app do Google Maps saindo da sua localização, com ${pts.length>10?'as 10 primeiras':'as '+pts.length} parada(s) na ordem da lista abaixo${pts.length>10?' (o Maps aceita até 10 por vez)':''}.</p></div>`;}
   h+=`<div class="secao">${secTopo('Ordem de visitas',`<span class="meta">${feitos.length} de ${lista.length} tratadas</span>`)}`;
-  if(!lista.length)h+=vazio('Dia livre',`Nenhuma piscina marcada para ${DIASL[dow].toLowerCase()}.`);
-  lista.forEach((c,i)=>{const v=visitaDoDia(c.id,data);
-    h+=`<div class="cartao ${v?'feito':''}"><span class="marcador">${v?ic('check'):i+1}</span>
-    <div class="cartao-txt" onclick="go('cliente',{id:'${c.id}'})"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">${esc(c.bairro||c.endereco||'')}${c.rota?' · '+esc(c.rota):''}</div><div class="meta">${c.m3?trimN(c.m3,1)+' m³':'volume não informado'}${v?' · tratada às '+fmtHora(v.data):''}</div></div>
-    ${(c.endereco||c.bairro)&&!v?`<a class="ico mini caixa" href="${navLink(c)}" target="_blank" aria-label="Navegar até ${esc(c.nome)}" style="color:var(--ac)">${ic('navegar')}</a>`:''}
-    ${v?`<button class="btn mini ghost" onclick="go('visitaVer',{id:'${v.id}'})">Ver</button>`:`<button class="btn mini" onclick="novaVisita('${c.id}','${data}')">Iniciar</button>`}
-    <div class="ordem"><button onclick="moverOrdem('${c.id}',${dow},-1)" aria-label="Subir">${ic('cima')}</button><button onclick="moverOrdem('${c.id}',${dow},1)" aria-label="Descer">${ic('baixo')}</button></div></div>`;});
+  if(!lista.length)h+=vazio('Dia livre',`Nenhuma piscina marcada para ${DIASL[dow].toLowerCase()}.`,`<button class="btn" onclick="go('agendaForm',{data:'${data}'})">${ic('mais')}Agendar avulso</button>`);
+  itens.forEach((x,i)=>{h+=itemDiaHTML(x,i,data,false);});
   h+=`</div>`;
   if(extras.length)h+=`<div class="secao">${secTopo('Fora da rota')}${extras.map(v=>itemVisitaHTML(v,true)).join('')}</div>`;
-  h+=`<button class="btn ghost bloco" style="margin-top:8px" onclick="escolherClienteVisita('${data}')">${ic('mais')}Visita fora da rota</button>`;
+  h+=`<div class="dupla" style="margin-top:8px"><button class="btn suave" onclick="go('agendaForm',{data:'${data}'})">${ic('calendario')}Agendar avulso</button><button class="btn ghost" onclick="escolherClienteVisita('${data}')">${ic('mais')}Visita fora</button></div>`;
   V(h);};
+
+function agendaMes(p){const hoje=isoDate(new Date());const ym=p.ym||hoje.slice(0,7);const [y,m]=ym.split('-').map(Number);
+  const sel=p.sel||(ym===hoje.slice(0,7)?hoje:'');
+  let h=agTopo('mes','Agenda','calendário do mês',sel||`${ym}-01`);
+  h+=`<div class="mes-topo"><button class="ico caixa" onclick="go('hoje',{mes:1,ym:'${addMes(ym,-1)}'},true)" aria-label="Mês anterior">${ic('esq')}</button><h2>${cap(MESES[m-1])} de ${y}</h2><button class="ico caixa" onclick="go('hoje',{mes:1,ym:'${addMes(ym,1)}'},true)" aria-label="Próximo mês">${ic('dir')}</button></div>`;
+  const ini=new Date(y,m-1,1).getDay();const nd=diasNoMes(y,m);let tt=0,ta=0,tf=0;let g='';
+  for(let i=0;i<ini;i++)g+='<span class="cel fora"></span>';
+  for(let d=1;d<=nd;d++){const iso=`${ym}-${pad(d)}`;const it=itensDia(iso).filter(x=>!x.rem);const nr=it.filter(x=>!x.av).length,na=it.filter(x=>x.a).length;
+    const f=it.filter(x=>visitaDoDia(x.c.id,iso)).length;tt+=it.length;ta+=na;tf+=f;
+    const est=it.length&&iso<=hoje?(f>=it.length?'ok':(iso<hoje?'falta':'')):'';
+    g+=`<button class="cel ${iso===hoje?'hoje':''} ${iso===sel?'sel':''} ${iso<hoje?'passado':''} ${it.length?'':'livre'}" onclick="selDia('${ym}','${iso}')" aria-label="${d} de ${MESES[m-1]}: ${it.length} atendimento(s)"><span class="n">${d}</span>${est?`<i class="est ${est}">${est==='ok'?ic('check'):''}</i>`:''}<span class="cont">${nr?`<i class="pm">${nr}</i>`:''}${na?`<i class="pa">${na}</i>`:''}</span></button>`;}
+  h+=`<div class="cal"><div class="cal-cab">${DIAS.map(d=>`<span>${d}</span>`).join('')}</div><div class="cal-grade">${g}</div>
+  <div class="legenda"><span><i class="pm">3</i>piscinas fixas</span><span><i class="pa">1</i>avulsos</span><span><i class="est ok">${ic('check')}</i>concluído</span><span><i class="est falta"></i>ficou pendente</span></div></div>`;
+  if(sel&&sel.startsWith(ym)){const sd=parseD(sel);const its=itensDia(sel);
+    h+=`<div class="secao" id="diaSel">${secTopo(`${DIASL[sd.getDay()].split('-')[0]}, ${sd.getDate()}`,`<button class="link" onclick="AG_MODO='dia';go('hoje',{data:'${sel}'},true)">${ic('rota')}Abrir rota</button>`)}`;
+    h+=its.length?its.map((x,i)=>itemDiaHTML(x,i,sel,true)).join(''):vazio('Dia livre','Nada marcado para este dia.');
+    h+=`<button class="btn suave bloco" style="margin-top:4px" onclick="go('agendaForm',{data:'${sel}'})">${ic('calendario')}Agendar avulso neste dia</button></div>`;}
+  h+=`<div class="grade-kpi tres" style="margin-top:16px"><div class="kpi"><b>${tt}</b><span>atendimentos</span></div><div class="kpi"><b style="color:var(--av)">${ta}</b><span>avulsos</span></div><div class="kpi"><b>${tf}</b><span>feitos</span></div></div>`;
+  const avs=DB.agenda.filter(a=>a.data.startsWith(ym)&&cli(a.clienteId)).sort((a,b)=>(a.data+pad(horaMin(a.hora))).localeCompare(b.data+pad(horaMin(b.hora))));
+  h+=`<div class="secao">${secTopo('Avulsos de '+MESES[m-1],`<span class="meta">${avs.length} no mês</span>`)}${avs.length?avs.map(avCardHTML).join(''):vazio('Nenhum avulso','Os atendimentos avulsos agendados neste mês aparecem aqui.',`<button class="btn" onclick="go('agendaForm',{})">${ic('mais')}Agendar avulso</button>`)}</div>`;
+  V(h);}
+function selDia(ym,iso){go('hoje',{mes:1,ym,sel:iso},true);requestAnimationFrame(()=>{const e=$('#diaSel');if(e){const r=e.getBoundingClientRect();if(r.top>innerHeight*.55)e.scrollIntoView({behavior:'smooth',block:'start'});}});}
+/* um item do dia (rota e calendário) */
+function itemDiaHTML(x,i,data,compacto){const c=x.c,a=x.a;const v=visitaDoDia(c.id,data);const hoje=isoDate(new Date());const pend=!v&&!x.rem;
+  if(x.rem)return `<div class="cartao remarcado"><span class="marcador">${ic('calendario')}</span><div class="cartao-txt" onclick="go('agendaForm',{id:'${x.rem.id}'})"><h3 class="ell">${esc(c.nome)}</h3><div class="selos"><span class="selo av">remarcado p/ ${fmtData(x.rem.data).slice(0,5)}${x.rem.hora?' · '+x.rem.hora:''}</span></div></div></div>`;
+  return `<div class="cartao ${v?'feito':''} ${x.av?'avulso':''}"><span class="marcador">${v?ic('check'):i+1}</span>
+    <div class="cartao-txt" onclick="${x.av?`go('agendaForm',{id:'${a.id}'})`:`go('cliente',{id:'${c.id}'})`}"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">${esc(c.bairro||c.endereco||'')}${c.rota&&!compacto?' · '+esc(c.rota):''}${c.m3?' · '+trimN(c.m3,1)+' m³':''}</div>
+    ${a?`<div class="selos">${seloAvulso(a)}<span class="selo av-serv">${esc(a.servico||'serviço avulso')}</span>${a.valor>0?seloPag(stPagAv(a)):''}</div>`:''}${v?`<div class="meta">tratada às ${fmtHora(v.data)}</div>`:''}</div>
+    ${pend&&data<=hoje?`<button class="ico mini caixa" onclick="remarcarSheet('${c.id}','${data}')" aria-label="Remarcar ${esc(c.nome)}" title="Remarcar" style="color:var(--av)">${ic('calendario')}</button>`:''}
+    ${pend&&data>=hoje&&!compacto&&(c.endereco||c.bairro)?`<a class="ico mini caixa" href="${navLink(c)}" target="_blank" aria-label="Navegar até ${esc(c.nome)}" style="color:var(--ac)">${ic('navegar')}</a>`:''}
+    ${v?`<button class="btn mini ghost" onclick="go('visitaVer',{id:'${v.id}'})">Ver</button>`:`<button class="btn mini" onclick="novaVisita('${c.id}','${data}')">Iniciar</button>`}
+    ${compacto?'':`<div class="ordem"><button onclick="moverItem('${data}',${i},-1)" aria-label="Subir">${ic('cima')}</button><button onclick="moverItem('${data}',${i},1)" aria-label="Descer">${ic('baixo')}</button></div>`}</div>`;}
+/* remarcar quem faltou */
+function remarcarSheet(cid,iso){const c=cli(cid);const av=DB.agenda.find(a=>a.clienteId===cid&&a.data===iso&&a.status!=='cancelado');
+  const op=[1,2,3].map(k=>{const d=new Date();d.setDate(d.getDate()+k);return {iso:isoDate(d),t:k===1?'Amanhã':cap(DIAS[d.getDay()])+' '+d.getDate()};});
+  openSheet('Remarcar',`<p style="margin-bottom:4px"><b>${esc(c.nome)}</b></p><p class="meta" style="margin-bottom:14px">${av?esc(av.servico):'Visita fixa'} de ${DIASL[parseD(iso).getDay()].split('-')[0].toLowerCase()}, ${fmtData(iso).slice(0,5)}</p>
+  <div class="chips" id="rmOp" style="margin-bottom:12px">${op.map((o,i)=>`<button class="chip ${i===0?'on':''}" onclick="$('#rmData').value='${o.iso}';$$('#rmOp .chip').forEach(b=>b.classList.toggle('on',b===this))">${o.t}</button>`).join('')}</div>
+  <div class="dupla"><label class="bloco"><span class="rotulo">Nova data</span><input type="date" id="rmData" value="${op[0].iso}"></label><label class="bloco"><span class="rotulo">Horário</span><input type="time" id="rmHora" value="${av?.hora||''}"></label></div>
+  <label class="troca"><input type="checkbox" id="rmAvisar" ${soDig(c.tel)?'checked':''}> Avisar o cliente pelo WhatsApp</label>
+  <button class="btn bloco" style="margin-top:14px" onclick="remarcar('${cid}','${iso}')">${ic('calendario')}Remarcar</button>
+  <p class="dica">${av?'O avulso muda de dia, com o mesmo serviço e valor.':'Vira um atendimento avulso no novo dia, sem cobrança extra. O dia de hoje fica marcado como remarcado.'}</p>`);}
+function remarcar(cid,iso){const nd=$('#rmData').value;if(!nd)return toast('Escolha a nova data');if(nd===iso)return toast('Escolha outro dia');
+  const hr=$('#rmHora').value||'';const avisar=$('#rmAvisar').checked;const c=cli(cid);const hoje=isoDate(new Date());
+  let a=DB.agenda.find(x=>x.clienteId===cid&&x.data===iso&&x.status!=='cancelado');
+  if(a){a.remDe=a.remDe||iso;a.data=nd;a.hora=hr;delete a.pos;}
+  else{a={id:uid(),criado:agoraISO(),status:'agendado',clienteId:cid,data:nd,hora:hr,servico:'Visita remarcada',valor:0,obs:`Remarcada de ${fmtData(iso)}`,remDe:iso};DB.agenda.push(a);}
+  save();closeSheet();render();toast(`Remarcado para ${fmtData(nd).slice(0,5)}`);
+  if(avisar){const quando=`${DIASL[parseD(nd).getDay()].split('-')[0].toLowerCase()}, ${fmtData(nd).slice(0,5)}${hr?' às '+hr:''}`;
+    const motivo=iso<hoje?`Não consegui passar na sua piscina no dia ${fmtData(iso).slice(0,5)}`:iso===hoje?'Hoje não vou conseguir passar na sua piscina':`Precisei mudar a visita do dia ${fmtData(iso).slice(0,5)}`;
+    window.open(waLink(c.tel,`Olá ${primeiro(c.nome)}! ${motivo}. Remarquei para ${quando}. Obrigado pela compreensão!\n${DB.cfg.responsavel||DB.cfg.nome}`),'_blank');}}
+
 function mudarDia(data,k){const d=parseD(data);d.setDate(d.getDate()+k);go('hoje',{data:isoDate(d)},true);}
-function moverOrdem(id,dow,dir){DB.clientes.sort((a,b)=>(a.ordem||0)-(b.ordem||0)).forEach((c,k)=>c.ordem=k+1);
-  const l=naRota(dow);const i=l.findIndex(c=>c.id===id),j=i+dir;
-  if(i<0||j<0||j>=l.length)return;[l[i].ordem,l[j].ordem]=[l[j].ordem,l[i].ordem];save();render();}
+function moverItem(iso,i,dir){const it=itensDia(iso);const j=i+dir;if(j<0||j>=it.length)return;const A=it[i],B=it[j];
+  if(!A.av&&!B.av){DB.clientes.sort((a,b)=>(a.ordem||0)-(b.ordem||0)).forEach((c,k)=>c.ordem=k+1);[A.c.ordem,B.c.ordem]=[B.c.ordem,A.c.ordem];}
+  else if(A.av&&!B.av)A.a.pos=B.k+(dir>0?.5:-.5);
+  else if(!A.av&&B.av)B.a.pos=A.k+(dir>0?-.5:.5);
+  else{const t=A.k,u=B.k;A.a.pos=u;B.a.pos=t===u?u-dir*.01:t;}
+  save();render();}
 let MAPA_MODO='pendentes';
 const navLink=c=>'https://www.google.com/maps/dir/?api=1&travelmode=driving&destination='+encodeURIComponent(enderecoCompleto(c));
 function mapaEmbed(l){const ad=l.slice(0,10).map(c=>encodeURIComponent(enderecoCompleto(c)));
   if(ad.length===1)return `https://maps.google.com/maps?q=${ad[0]}&z=15&output=embed`;
   return `https://maps.google.com/maps?saddr=${ad[0]}&daddr=${ad.slice(1).join('+to:')}&dirflg=d&output=embed`;}
-function abrirRota(data,modo){const dow=parseD(data).getDay();
-  const pend=naRota(dow).filter(c=>(modo==='todas'||!visitaDoDia(c.id,data))&&(c.endereco||c.bairro));
+function abrirRota(data,modo){const pend=itensDia(data).filter(x=>!x.rem).map(x=>x.c).filter(c=>(modo==='todas'||!visitaDoDia(c.id,data))&&(c.endereco||c.bairro));
   if(!pend.length)return;const ad=pend.slice(0,10).map(enderecoCompleto);const dest=ad.pop();
   let u='https://www.google.com/maps/dir/?api=1&travelmode=driving&destination='+encodeURIComponent(dest);
   if(ad.length)u+='&waypoints='+encodeURIComponent(ad.slice(0,9).join('|'));window.open(u,'_blank');}
 function escolherClienteVisita(data){const l=DB.clientes.filter(c=>c.ativo!==false).sort(byNome);if(!l.length)return go('clienteForm');
   openSheet('Visita fora da rota',l.map(c=>`<button class="cartao" onclick="novaVisita('${c.id}','${data}')"><span class="data-bloco"><b style="font-size:1.15rem">${esc(iniciais(c.nome))}</b></span><div class="cartao-txt"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">${esc(c.bairro||'')}</div></div></button>`).join(''));}
 
+/* -- formulário do atendimento avulso -- */
+VIEWS.agendaForm=p=>{const a=p.id?DB.agenda.find(x=>x.id===p.id):null;if(p.id&&!a){back();return;}const hoje=isoDate(new Date());
+  const ed=a||{data:p.data||hoje,hora:'',clienteId:p.cid||'',servico:'',valor:null,obs:''};
+  document.title=a?'Atendimento avulso':'Agendar avulso';
+  const cls=DB.clientes.filter(c=>c.ativo!==false||c.id===ed.clienteId).sort(byNome);const c=a?cli(a.clienteId):null;
+  let h=cab(a?esc(c?.nome||'Atendimento'):'Agendar avulso',a?SELO_AV[stAv(a)]:'',a?'atendimento avulso':'nova data na agenda');
+  h+=`<div class="secao" style="margin-top:0">${secTopo('Cliente')}<div class="cartao lista">
+  <label class="bloco"><span class="rotulo">Cliente</span><select id="agCli" onchange="$('#agNovo').style.display=this.value?'none':''"><option value="">+ Novo cliente</option>${cls.map(x=>`<option value="${x.id}" ${x.id===ed.clienteId?'selected':''}>${esc(x.nome)}</option>`).join('')}</select></label>
+  <div id="agNovo" style="${ed.clienteId?'display:none':''}">
+  <label class="bloco"><span class="rotulo">Nome *</span><input id="agNome"></label>
+  <label class="bloco"><span class="rotulo">WhatsApp / telefone</span><input id="agTel" inputmode="tel" placeholder="(44) 99999-9999"></label>
+  <label class="bloco"><span class="rotulo">Endereço (rua e número)</span><input id="agEnd"></label>
+  <div class="dupla"><label class="bloco"><span class="rotulo">Bairro</span><input id="agBai"></label><label class="bloco"><span class="rotulo">Volume (m³)</span><input id="agM3" inputmode="decimal"></label></div>
+  <p class="dica">O cliente fica salvo, sem dias fixos, para agendar de novo quando precisar.</p></div></div></div>
+  <div class="secao">${secTopo('Quando e o quê')}<div class="cartao lista">
+  <div class="dupla"><label class="bloco"><span class="rotulo">Data</span><input type="date" id="agData" value="${ed.data}"></label><label class="bloco"><span class="rotulo">Horário</span><input type="time" id="agHora" value="${ed.hora||''}"></label></div>
+  <label class="bloco"><span class="rotulo">Serviço</span><input id="agServ" list="dlServ" value="${esc(ed.servico||'')}" placeholder="Ex.: Recuperação de piscina verde"><datalist id="dlServ">${SERVICOS.map(s=>`<option value="${s}">`).join('')}</datalist></label>
+  <label class="bloco"><span class="rotulo">Valor combinado (R$)</span><input id="agVal" inputmode="decimal" value="${numIn(ed.valor)}"></label>
+  <label class="bloco"><span class="rotulo">Observações</span><textarea id="agObs" placeholder="Portão, produtos a levar, forma de pagamento…">${esc(ed.obs||'')}</textarea></label></div></div>
+  <div class="salvar-fixo"><button class="btn bloco" onclick="salvarAgenda('${a?a.id:''}')">${ic('check')}${a?'Salvar alterações':'Agendar'}</button></div>`;
+  if(a){const v=visitaDoDia(a.clienteId,a.data);const pg=pagAv(a);const cancel=a.status==='cancelado';
+    h+=`<div class="secao">${secTopo('Ações')}<div class="cartao lista">
+    ${v?`<button class="btn ghost bloco" onclick="go('visitaVer',{id:'${v.id}'})">${ic('frasco')}Ver o tratamento feito</button>`:(!cancel?`<button class="btn bloco" onclick="novaVisita('${a.clienteId}','${a.data}')">${ic('frasco')}Iniciar o tratamento</button>`:'')}
+    ${pg?`<button class="btn ghost bloco" onclick="verRecibo('${pg.id}')">${ic('recibo')}Ver o recibo</button>`:(a.valor>0&&!cancel?`<button class="btn suave bloco" onclick="receberAv('${a.id}')">${ic('moeda')}Registrar pagamento</button>`:'')}
+    <button class="btn ghost bloco" onclick="avisarAv('${a.id}')">${ic('conversa')}${!v&&a.data>=hoje?'Confirmar com o cliente':pg?'Mensagem para o cliente':'Cobrar pelo WhatsApp'}</button>
+    ${cancel?`<button class="btn ghost bloco" onclick="statusAv('${a.id}','agendado')">Reativar agendamento</button>`:(!v?`<button class="btn ghost bloco" onclick="statusAv('${a.id}','cancelado')">${ic('x')}Cancelar agendamento</button>`:'')}
+    <button class="btn perigo bloco" onclick="excluirAv('${a.id}')">${ic('lixo')}Excluir</button></div></div>`;}
+  V(h);};
+function salvarAgenda(id){let cid=$('#agCli').value;const data=$('#agData').value;if(!data)return toast('Escolha a data');
+  if(!cid){const nome=$('#agNome').value.trim();if(!nome)return toast('Escolha o cliente ou digite o nome');
+    const c={id:uid(),criado:agoraISO(),desde:ymNow(),ordem:Math.max(0,...DB.clientes.map(x=>x.ordem||0))+1,nome,tel:$('#agTel').value.trim(),endereco:$('#agEnd').value.trim(),bairro:$('#agBai').value.trim(),rota:'',dias:[],formato:'ret',med:{},m3:num($('#agM3').value),mensal:0,venc:10,obs:'',ativo:true,tipo:'avulso'};
+    DB.clientes.push(c);cid=c.id;}
+  let a=id?DB.agenda.find(x=>x.id===id):null;const novo=!a;if(novo){a={id:uid(),criado:agoraISO(),status:'agendado'};DB.agenda.push(a);}
+  if(!novo&&a.data!==data)delete a.pos;
+  Object.assign(a,{clienteId:cid,data,hora:$('#agHora').value||'',servico:$('#agServ').value.trim()||'Serviço avulso',valor:num($('#agVal').value)||0,obs:$('#agObs').value.trim()});
+  save();
+  if(novo){AG_MODO='dia';abrirDia(data);const c=cli(cid);
+    openSheet('Agendado!',`<p style="margin-bottom:4px"><b>${esc(c.nome)}</b></p><p class="meta" style="margin-bottom:14px">${DIASL[parseD(data).getDay()]}, ${dataLonga(data)}${a.hora?' às '+a.hora:''} · ${esc(a.servico)}</p><p class="dica" style="margin:0 0 14px">Já aparece na rota do dia, no calendário, no painel e no financeiro.</p>
+    <button class="btn bloco" onclick="avisarAv('${a.id}');closeSheet()">${ic('conversa')}Confirmar com o cliente</button><button class="btn ghost bloco" onclick="closeSheet()">Agora não</button>`);}
+  else{toast('Agendamento salvo');back();}}
+function statusAv(id,s){const a=DB.agenda.find(x=>x.id===id);if(!a)return;if(s==='cancelado'&&!confirm('Cancelar este agendamento?'))return;a.status=s;save();render();toast(s==='cancelado'?'Agendamento cancelado':'Agendamento reativado');}
+function excluirAv(id){if(!confirm('Excluir este agendamento? O recibo, se houver, continua no financeiro.'))return;
+  DB.agenda=DB.agenda.filter(x=>x.id!==id);DB.pagamentos.forEach(p=>{if(p.agendaId===id)delete p.agendaId;});save();toast('Agendamento excluído');back();}
+function avisarAv(id){const a=DB.agenda.find(x=>x.id===id);if(!a)return;const c=cli(a.clienteId);const cfg=DB.cfg;const hoje=isoDate(new Date());const feito=stAv(a)==='feito';const pg=pagAv(a);
+  const quando=`${DIASL[parseD(a.data).getDay()].split('-')[0].toLowerCase()}, ${fmtData(a.data).slice(0,5)}${a.hora?' às '+a.hora:''}`;let t;
+  if(!feito&&a.data>=hoje)t=`Olá ${primeiro(c.nome)}! Tudo certo? Confirmando o serviço na sua piscina (${a.servico.toLowerCase()}) para ${quando}.${a.valor>0?`\nValor combinado: ${brl(a.valor)}.`:''}\n\nSe precisar mudar o horário, é só me avisar. Obrigado!\n${cfg.responsavel||cfg.nome}`;
+  else if(!pg&&a.valor>0){t=`Olá ${primeiro(c.nome)}! Obrigado pela confiança. Segue o valor do serviço feito na sua piscina (${a.servico.toLowerCase()}) em ${fmtData(a.data).slice(0,5)}: ${brl(a.valor)}.`;
+    if(cfg.pix)t+=`\n\n💠 Chave Pix: ${cfg.pix}${cfg.pixNome?'\nTitular: '+cfg.pixNome:''}`;t+=`\n\nQualquer dúvida estou à disposição!\n${cfg.responsavel||cfg.nome}`;}
+  else t=`Olá ${primeiro(c.nome)}! `;
+  if(!soDig(c.tel))toast('Cliente sem telefone: escolha o contato no WhatsApp');window.open(waLink(c.tel,t),'_blank');}
+function receberAv(id){const a=DB.agenda.find(x=>x.id===id);const c=cli(a.clienteId);
+  openSheet('Receber',`<p class="meta" style="margin-bottom:12px">${esc(c.nome)} · ${esc(a.servico)} · ${fmtData(a.data)}</p>
+  <label class="bloco"><span class="rotulo">Descrição no recibo</span><input id="pDesc" value="${esc(a.servico+' em '+fmtData(a.data))}"></label>
+  <div class="dupla"><label class="bloco"><span class="rotulo">Valor (R$)</span><input id="pVal" inputmode="decimal" value="${numIn(a.valor)}"></label><label class="bloco"><span class="rotulo">Forma</span><select id="pForma">${FORMAS.map(f=>`<option>${f}</option>`).join('')}</select></label></div>
+  <label class="bloco"><span class="rotulo">Data do pagamento</span><input type="date" id="pData" value="${isoDate(new Date())}"></label>
+  <button class="btn bloco" style="margin-top:6px" onclick="salvarPagAv('${id}')">${ic('recibo')}Registrar e gerar recibo</button>`);}
+function salvarPagAv(id){const a=DB.agenda.find(x=>x.id===id);const c=cli(a.clienteId);const valor=num($('#pVal').value);if(!valor)return toast('Informe o valor');
+  const p={id:uid(),num:DB.seqRecibo++,clienteId:c.id,pagador:c.nome,ref:null,agendaId:a.id,descricao:$('#pDesc').value.trim()||a.servico,valor,forma:$('#pForma').value,data:$('#pData').value||isoDate(new Date())};
+  DB.pagamentos.push(p);save();closeSheet();render();verRecibo(p.id);toast('Pagamento registrado');}
+
 /* ============ PAINEL (tela inicial) ============ */
 let PAINEL_MODO=null;
 const brl0=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:0,maximumFractionDigits:Number(n)%1?2:0});
 function abrirDia(iso){closeSheet();STACK=[{name:'hoje',params:{data:iso}}];render(true);window.scrollTo(0,0);}
-function rotaDoDia(iso){const l=naRota(parseD(iso).getDay());return {l,feitos:l.filter(c=>visitaDoDia(c.id,iso)),pend:l.filter(c=>!visitaDoDia(c.id,iso))};}
+function rotaDoDia(iso){const it=itensDia(iso).filter(x=>!x.rem);const l=it.map(x=>x.c);return {it,l,feitos:l.filter(c=>visitaDoDia(c.id,iso)),pend:l.filter(c=>!visitaDoDia(c.id,iso))};}
 const regioesDe=l=>[...new Set(l.map(c=>c.rota||c.bairro).filter(Boolean))];
 function ultimaVisita(cid,antesDe,comProdutos){return DB.visitas.filter(v=>v.clienteId===cid&&v.data.slice(0,10)<antesDe&&(!comProdutos||v.produtos?.length)).sort((a,b)=>b.data.localeCompare(a.data))[0];}
 function previsaoProdutos(clientes,antesDe){const tot={};let sem=0;
@@ -646,11 +832,11 @@ function previsaoHTML(pr){
   if(!pr.linhas.length)return `<p class="meta">${pr.sem?'Ainda sem visitas anteriores para estimar. A previsão aparece depois da primeira visita de cada piscina.':'Nada previsto.'}</p>`;
   return pr.linhas.map(({it,q,tem,st})=>`<div class="linha-item"><div style="flex:1;min-width:0"><div class="ell">${esc(it.nome)}</div><div class="meta">no estoque: ${fmtQ(tem,SMALL[it.un])}</div></div><div style="text-align:right"><b>${fmtQ(q,SMALL[it.un])}</b>${st!=='ok'?`<div><span class="selo ${st}">${st==='perigo'?'não vai dar':'fica no limite'}</span></div>`:''}</div></div>`).join('')
     +`<p class="dica">Estimativa pela última aplicação em cada piscina${pr.sem?` · ${pr.sem} sem histórico ficaram fora da conta`:''}.</p>`;}
-function pontosAtencao(c,antesDe){const out=[];const v=ultimaVisita(c.id,antesDe);
+function pontosAtencao(c,antesDe,av){const out=[];const v=ultimaVisita(c.id,antesDe);if(av)out.push({t:`avulso${av.hora?' às '+av.hora:''}: ${av.servico}`,c:'av'});
   if(v){[['ph','pH',0],['cloro','Cloro',0],['alc','Alcalinidade',1],['dur','Dureza',1]].forEach(([k,l,fem])=>{const st=stMed(k,v[k]);if(st&&st!=='ok')out.push({t:`${l} ${fem?st.replace(/o$/,'a'):st} (${trimN(v[k],1)})`,c:'alerta'});});
     if(v.obs)out.push({t:v.obs,c:''});}
   else out.push({t:'primeira visita',c:''});
-  const at=atrasos().filter(a=>a.c.id===c.id);if(at.length)out.push({t:`cobrar ${at.map(a=>MESC[+a.ym.slice(5)-1]).join(', ')}`,c:'perigo'});
+  const at=atrasos().filter(a=>a.c.id===c.id);if(at.length)out.push({t:`cobrar ${at.map(a=>a.a?'avulso de '+fmtData(a.a.data).slice(0,5):MESC[+a.ym.slice(5)-1]).join(', ')}`,c:'perigo'});
   return {v,out};}
 function anel(f,t){const r=34,C=2*Math.PI*r,p=t?f/t:0;
   return `<svg viewBox="0 0 80 80" class="anel" aria-hidden="true"><circle cx="40" cy="40" r="${r}" fill="none" stroke="var(--surf2)" stroke-width="8"/><circle cx="40" cy="40" r="${r}" fill="none" stroke="var(--ac)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-p)).toFixed(1)}" transform="rotate(-90 40 40)"/></svg><div class="anel-txt"><b>${f}</b><span>de ${t}</span></div>`;}
@@ -659,7 +845,7 @@ VIEWS.inicio=()=>{document.title='Polidoro - Limpeza de Piscinas';const agora=ne
   const saud=(hr<12?'Bom dia':hr<18?'Boa tarde':'Boa noite')+(nome?', '+esc(nome):'');
   if(!DB.clientes.length){
     V(`<div class="saudacao"><div class="eyebrow">primeiros passos</div><h1>${hr<12?'Bom dia':hr<18?'Boa tarde':'Boa noite'}!</h1><p class="sub">${nuvemConfigurada()?'Quatro':'Três'} passos e o Polidoro monta a sua rota, calcula as dosagens e controla estoque e mensalidades.</p></div>
-    <ol class="passos">${nuvemConfigurada()?`<li class="${Nuvem.user?'feito':''}"><b>Sua conta</b>${Nuvem.user?'':`<button class="btn mini" onclick="go('config')">Entrar</button>`}<span>${Nuvem.user?esc(Nuvem.user.email||'Conectado'):'Backup na nuvem e uso em mais de um aparelho.'}</span></li>`:''}<li class="${DB.cfg.responsavel?'feito':''}"><b>Seu negócio e logo</b><button class="btn mini" onclick="go('config')">Abrir</button><span>Nome, CNPJ do MEI e chave Pix para recibos e cobranças.</span></li>
+    <ol class="passos">${nuvemConfigurada()?`<li class="${Nuvem.user?'feito':''}"><b>Sua conta</b>${Nuvem.user?'':`<button class="btn mini" onclick="go('config')">Entrar</button>`}<span>${Nuvem.user?esc(Nuvem.user.email||'Conectado'):'Backup na nuvem e uso em mais de um aparelho.'}</span></li>`:''}<li class="${DB.cfg.responsavel?'feito':''}"><b>Seu negócio</b><button class="btn mini" onclick="go('config')">Abrir</button><span>Nome, CNPJ do MEI e chave Pix para recibos e cobranças.</span></li>
     <li><b>Primeiro cliente</b><button class="btn mini" onclick="go('clienteForm')">Cadastrar</button><span>Com os dias de visita e o volume da piscina.</span></li>
     <li class="${DB.estoque.some(i=>i.qtd>0)?'feito':''}"><b>Estoque do carro</b><button class="btn mini" onclick="tab('estoque')">Lançar</button><span>Quanto você tem de cloro, bicarbonato, algicida…</span></li></ol>`);return;}
   const modo=PAINEL_MODO||(hr<14?'comeco':'fim');
@@ -670,7 +856,7 @@ VIEWS.inicio=()=>{document.title='Polidoro - Limpeza de Piscinas';const agora=ne
   const prox=pend[0];
   h+=`<div class="cartao lista heroi"><div class="anel-box">${anel(feitos.length,l.length)}</div><div style="flex:1;min-width:0">`;
   if(!l.length)h+=`<div class="rotulo">Hoje</div><h3>Dia sem rota</h3><p class="meta">Bom dia para repor o estoque e colocar as cobranças em dia.</p>`;
-  else if(prox)h+=`<div class="rotulo">${feitos.length?'Próxima parada':'Primeira parada'}</div><h3 class="ell">${esc(prox.nome)}</h3><p class="meta ell">${esc(prox.bairro||prox.endereco||'')}${prox.m3?' · '+trimN(prox.m3,1)+' m³':''}</p><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn mini" onclick="novaVisita('${prox.id}')">Iniciar</button>${prox.endereco||prox.bairro?`<a class="btn mini ghost" href="${navLink(prox)}" target="_blank">${ic('navegar')}Ir até lá</a>`:''}</div>`;
+  else if(prox)h+=`<div class="rotulo">${feitos.length?'Próxima parada':'Primeira parada'}</div><h3 class="ell">${esc(prox.nome)}</h3><p class="meta ell">${esc(prox.bairro||prox.endereco||'')}${prox.m3?' · '+trimN(prox.m3,1)+' m³':''}</p>${avMap(hoje).get(prox.id)?`<div class="selos">${seloAvulso(avMap(hoje).get(prox.id))}<span class="selo av-serv">${esc(avMap(hoje).get(prox.id).servico)}</span></div>`:''}<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn mini" onclick="novaVisita('${prox.id}')">Iniciar</button>${prox.endereco||prox.bairro?`<a class="btn mini ghost" href="${navLink(prox)}" target="_blank">${ic('navegar')}Ir até lá</a>`:''}</div>`;
   else h+=`<div class="rotulo">Rota concluída</div><h3>Todas as piscinas tratadas!</h3><p class="meta">${l.length} piscina(s) · ${fmtN(m3)} m³ no total.</p>`;
   h+=`</div></div>`;
   h+=avisosHTML();
@@ -682,18 +868,20 @@ function painelComeco(hoje,l,pend,m3){let h='';
   if(l.length){
     h+=`<div class="grade-kpi tres"><div class="kpi"><b>${pend.length}</b><span>a visitar</span></div><div class="kpi"><b class="menor">${fmtN(m3)}</b><span>m³ de água</span></div><div class="kpi"><b>${regioesDe(l).length}</b><span>região(ões)</span></div></div>`;
     if(pend.length)h+=`<div class="secao" style="margin-top:8px">${secTopo('Leve no carro')}<div class="cartao lista">${previsaoHTML(previsaoProdutos(pend,hoje))}</div></div>`;
-    const at=pend.map(c=>({c,...pontosAtencao(c,hoje)})).filter(x=>x.out.length);
+    const AVH=avMap(hoje);const at=pend.map(c=>({c,...pontosAtencao(c,hoje,AVH.get(c.id))})).filter(x=>x.out.length);
     if(pend.length)h+=`<div class="secao">${secTopo('Atenção na rota')}${at.length?at.map(({c,v,out})=>`<button class="cartao" onclick="go('cliente',{id:'${c.id}'})"><span class="marcador">${l.indexOf(c)+1}</span><div class="cartao-txt"><h3 class="ell">${esc(c.nome)}</h3><div class="meta">${v?'última visita '+fmtData(v.data).slice(0,5):'sem visita anterior'}</div><div class="selos">${out.map(o=>`<span class="selo ${o.c}" style="text-transform:none;letter-spacing:0;white-space:normal;text-align:left">${esc(o.t)}</span>`).join('')}</div></div></button>`).join(''):`<div class="aviso">${ic('check')}<p>Nenhum ponto de atenção: as últimas medições das piscinas de hoje estão dentro da faixa.</p></div>`}</div>`;
-    h+=`<button class="btn bloco" style="margin-top:6px" onclick="tab('hoje')">${ic('rota')}Abrir a rota de hoje</button>`;}
+    h+=`<button class="btn bloco" style="margin-top:6px" onclick="AG_MODO='dia';abrirDia('${hoje}')">${ic('rota')}Abrir a rota de hoje</button>`;}
   const ym=ymNow();const dia=new Date().getDate();
   const vencem=DB.clientes.filter(c=>c.ativo!==false&&c.mensal>0&&(c.desde||'0000')<=ym&&(c.venc||10)===dia&&!pagMes(c.id,ym)).sort(byNome);
-  if(vencem.length)h+=`<div class="secao">${secTopo('Vencem hoje',`<span class="meta">${brl(vencem.reduce((s,c)=>s+c.mensal,0))}</span>`)}${vencem.map(c=>`<div class="cartao"><div class="cartao-txt" onclick="go('cliente',{id:'${c.id}',aba:'pag'})"><h3 class="ell">${esc(c.nome)}</h3><div class="meta">${brl(c.mensal)}</div></div><button class="btn mini ghost" onclick="cobrar('${c.id}','${ym}')">${ic('sino')}Lembrar</button><button class="btn mini" onclick="receberSheet('${c.id}','${ym}')">Receber</button></div>`).join('')}</div>`;
+  const avh=DB.agenda.filter(a=>a.data===hoje&&stPagAv(a)==='pendente'&&cli(a.clienteId));
+  const totR=vencem.reduce((s,c)=>s+c.mensal,0)+avh.reduce((s,a)=>s+a.valor,0);
+  if(vencem.length||avh.length)h+=`<div class="secao">${secTopo('A receber hoje',`<span class="meta">${brl(totR)}</span>`)}${vencem.map(c=>`<div class="cartao"><div class="cartao-txt" onclick="go('cliente',{id:'${c.id}',aba:'pag'})"><h3 class="ell">${esc(c.nome)}</h3><div class="meta">Mensalidade · ${brl(c.mensal)}</div></div><button class="btn mini ghost" onclick="cobrar('${c.id}','${ym}')">${ic('sino')}Lembrar</button><button class="btn mini" onclick="receberSheet('${c.id}','${ym}')">Receber</button></div>`).join('')}${avh.map(a=>{const c=cli(a.clienteId);return `<div class="cartao"><div class="cartao-txt" onclick="go('agendaForm',{id:'${a.id}'})"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">Avulso · ${esc(a.servico)} · ${brl(a.valor)}</div></div><button class="btn mini ghost" onclick="avisarAv('${a.id}')">${ic('sino')}Lembrar</button><button class="btn mini" onclick="receberAv('${a.id}')">Receber</button></div>`;}).join('')}</div>`;
   return h;}
 
 function painelFim(hoje,l,pend){let h='';const vs=DB.visitas.filter(v=>v.data.slice(0,10)===hoje).sort((a,b)=>a.data.localeCompare(b.data));
   const pgs=DB.pagamentos.filter(p=>p.data===hoje);const rec=pgs.reduce((s,p)=>s+p.valor,0);const fotos=vs.reduce((s,v)=>s+(v.nFotos||0),0);
   h+=`<div class="grade-kpi"><div class="kpi"><b>${vs.length}</b><span>visitas</span></div><div class="kpi ${pend.length?'alerta':''}"><b>${pend.length}</b><span>faltaram</span></div><div class="kpi"><b class="menor">${brl0(rec)}</b><span>recebido</span></div><div class="kpi"><b>${fotos}</b><span>fotos</span></div></div>`;
-  if(pend.length)h+=`<div class="secao" style="margin-top:8px">${secTopo('Faltaram hoje')}${pend.map(c=>`<div class="cartao"><span class="marcador">${l.indexOf(c)+1}</span><div class="cartao-txt" onclick="go('cliente',{id:'${c.id}'})"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">${esc(c.bairro||'')}</div></div>${c.tel?`<a class="ico mini caixa" href="${waLink(c.tel,'Olá '+primeiro(c.nome)+'! Hoje não consegui passar na sua piscina. ')}" target="_blank" aria-label="Avisar ${esc(c.nome)}" style="color:var(--ac)">${ic('conversa')}</a>`:''}<button class="btn mini" onclick="novaVisita('${c.id}')">Iniciar</button></div>`).join('')}</div>`;
+  if(pend.length)h+=`<div class="secao" style="margin-top:8px">${secTopo('Faltaram hoje')}${pend.map(c=>`<div class="cartao"><span class="marcador">${l.indexOf(c)+1}</span><div class="cartao-txt" onclick="go('cliente',{id:'${c.id}'})"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">${esc(c.bairro||'')}</div></div><button class="btn mini ghost" onclick="remarcarSheet('${c.id}','${hoje}')">${ic('calendario')}Remarcar</button><button class="btn mini" onclick="novaVisita('${c.id}')">Iniciar</button></div>`).join('')}</div>`;
   if(vs.length){const nao=vs.filter(v=>!v.enviado);
     h+=`<div class="secao">${secTopo('Resumos para os clientes',`<span class="meta">${vs.length-nao.length} de ${vs.length} enviados</span>`)}${nao.length?nao.map(v=>{const c=cli(v.clienteId);return `<div class="cartao"><div class="cartao-txt" onclick="go('visitaVer',{id:'${v.id}'})"><h3 class="ell">${esc(c?.nome||'')}</h3><div class="meta">tratada às ${fmtHora(v.data)}${v.nFotos?' · '+v.nFotos+' foto(s)':''}</div></div><button class="btn mini ghost" onclick="verCard('${v.id}')">${ic('imagem')}Card</button><button class="btn mini" onclick="enviarTexto('${v.id}');render()">${ic('conversa')}Enviar</button></div>`;}).join(''):`<div class="aviso">${ic('check')}<p>Todos os resumos de hoje foram enviados.</p></div>`}</div>`;
     const us={};vs.forEach(v=>v.produtos.forEach(p=>{const k=p.itemId||p.nome;(us[k]=us[k]||{nome:p.nome,un:p.un,q:0,it:item(p.itemId)}).q+=p.qtd;}));const ul=Object.values(us);
@@ -703,7 +891,7 @@ function painelFim(hoje,l,pend){let h='';const vs=DB.visitas.filter(v=>v.data.sl
   const am=new Date();am.setDate(am.getDate()+1);const amISO=isoDate(am);const r2=rotaDoDia(amISO);const m3b=r2.l.reduce((s,c)=>s+(c.m3||0),0);
   h+=`<div class="secao">${secTopo('Amanhã',`<span class="meta">${DIASL[am.getDay()].split('-')[0].toLowerCase()}, ${am.getDate()}/${pad(am.getMonth()+1)}</span>`)}`;
   if(r2.l.length){const pr=previsaoProdutos(r2.l,amISO);const falta=pr.linhas.filter(x=>x.st!=='ok');
-    h+=`<div class="cartao lista"><div style="display:flex;gap:12px;align-items:center"><span class="data-bloco"><b>${am.getDate()}</b><span>${MESC[am.getMonth()]}</span></span><div style="flex:1;min-width:0"><h3>${r2.l.length} piscina(s) · ${fmtN(m3b)} m³</h3><div class="meta ell">${esc(regioesDe(r2.l).join(', ')||'sem região cadastrada')}</div><div class="meta ell">primeira: ${esc(r2.l[0].nome)}</div></div></div></div>`;
+    h+=`<div class="cartao lista"><div style="display:flex;gap:12px;align-items:center"><span class="data-bloco"><b>${am.getDate()}</b><span>${MESC[am.getMonth()]}</span></span><div style="flex:1;min-width:0"><h3>${r2.l.length} piscina(s) · ${fmtN(m3b)} m³</h3>${r2.it.filter(x=>x.a).length?`<div class="selos" style="margin:2px 0"><span class="selo av">${r2.it.filter(x=>x.a).length} avulso(s)</span></div>`:''}<div class="meta ell">${esc(regioesDe(r2.l).join(', ')||'sem região cadastrada')}</div><div class="meta ell">primeira: ${esc(r2.l[0].nome)}</div></div></div></div>`;
     if(falta.length)h+=`<div class="aviso alerta">${ic('alerta')}<p><b>Repor antes de sair:</b> ${falta.map(x=>esc(x.it.nome)).join(', ')}. O estoque não cobre a previsão de amanhã com folga.</p></div>`;
     h+=`<div class="cartao lista"><div class="rotulo" style="margin-bottom:4px">Previsão de produtos</div>${previsaoHTML(pr)}</div><button class="btn ghost bloco" style="margin-top:6px" onclick="abrirDia('${amISO}')">${ic('rota')}Ver a rota de amanhã</button>`;}
   else h+=vazio('Amanhã está livre','Nenhuma piscina marcada para amanhã.');
@@ -712,9 +900,11 @@ function painelFim(hoje,l,pend){let h='';const vs=DB.visitas.filter(v=>v.data.sl
 
 function painelMes(){const ym=ymNow();const vis=DB.visitas.filter(v=>v.data.startsWith(ym)).length;
   const rec=DB.pagamentos.filter(p=>p.data.startsWith(ym)).reduce((s,p)=>s+p.valor,0);const atv=atrasos().reduce((s,a)=>s+a.valor,0);
-  const ativos=DB.clientes.filter(c=>c.ativo!==false&&c.mensal>0&&(c.desde||'0000')<=ym);const prev=ativos.reduce((s,c)=>s+c.mensal,0);const pagos=ativos.filter(c=>pagMes(c.id,ym));const recM=pagos.reduce((s,c)=>s+c.mensal,0);
+  const ativos=DB.clientes.filter(c=>c.ativo!==false&&c.mensal>0&&(c.desde||'0000')<=ym);const avM=DB.agenda.filter(a=>a.data.startsWith(ym)&&a.status!=='cancelado'&&a.valor>0&&cli(a.clienteId));
+  const prev=ativos.reduce((s,c)=>s+c.mensal,0)+avM.reduce((s,a)=>s+a.valor,0);const pagosM=ativos.filter(c=>pagMes(c.id,ym));const pagosA=avM.filter(a=>pagAv(a));
+  const recM=pagosM.reduce((s,c)=>s+c.mensal,0)+pagosA.reduce((s,a)=>s+a.valor,0);const pagos={length:pagosM.length+pagosA.length};const totN=ativos.length+avM.length;
   return `<div class="secao">${secTopo(cap(MESES[+ym.slice(5)-1])+' em números',`<button class="link" onclick="tab('financeiro')">Financeiro</button>`)}<div class="grade-kpi tres"><div class="kpi"><b>${vis}</b><span>visitas no mês</span></div><div class="kpi"><b class="menor">${brl0(rec)}</b><span>recebido</span></div><div class="kpi ${atv?'perigo':''}"><b class="menor">${brl0(atv)}</b><span>em atraso</span></div></div>
-  <div class="cartao lista"><div style="display:flex;justify-content:space-between;gap:8px"><span class="rotulo">Mensalidades do mês</span><span class="meta">${pagos.length} de ${ativos.length} pagas</span></div><div class="prog"><i style="width:${prev?Math.min(100,recM/prev*100):0}%"></i></div><p class="meta" style="margin-top:6px">${brl(recM)} de ${brl(prev)} previstos</p></div></div>`;}
+  <div class="cartao lista"><div style="display:flex;justify-content:space-between;gap:8px"><span class="rotulo">Recebimentos do mês</span><span class="meta">${pagos.length} de ${totN} pagos</span></div><div class="prog"><i style="width:${prev?Math.min(100,recM/prev*100):0}%"></i></div><p class="meta" style="margin-top:6px">${brl(recM)} de ${brl(prev)} previstos${avM.length?` · ${avM.length} avulso(s)`:''}</p></div></div>`;}
 
 
 /* ============ CLIENTES ============ */
@@ -728,7 +918,7 @@ function listaClientes(){const q=($('#busca')?.value||'').toLowerCase().trim();l
   if(q)l=l.filter(c=>[c.nome,c.bairro,c.rota,c.endereco,c.tel].join(' ').toLowerCase().includes(q));
   if(FDIA>=0)l=l.filter(c=>(c.dias||[]).includes(FDIA));const ym=ymNow();
   $('#lc').innerHTML=l.length?`<div class="eyebrow" style="margin:2px 4px 8px">${l.length} cliente(s)</div>`+l.map(c=>{const st=c.mensal>0&&(c.desde||'0000')<=ym?statusMes(c,ym):'';
-    return `<button class="cartao ${c.ativo===false?'inativo':''}" onclick="go('cliente',{id:'${c.id}'})"><span class="data-bloco"><b style="font-size:1.15rem">${esc(iniciais(c.nome))}</b></span><div class="cartao-txt"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">${esc(c.bairro||'')}${c.rota?' · '+esc(c.rota):''}</div><div class="selos">${(c.dias||[]).slice().sort().map(d=>`<span class="selo">${DIAS[d]}</span>`).join('')}${st==='futuro'?'':seloStatus(st)}${c.ativo===false?'<span class="selo">inativo</span>':''}</div></div></button>`;}).join('')
+    return `<button class="cartao ${c.ativo===false?'inativo':''}" onclick="go('cliente',{id:'${c.id}'})"><span class="data-bloco"><b style="font-size:1.15rem">${esc(iniciais(c.nome))}</b></span><div class="cartao-txt"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">${esc(c.bairro||'')}${c.rota?' · '+esc(c.rota):''}</div><div class="selos">${(c.dias||[]).slice().sort().map(d=>`<span class="selo">${DIAS[d]}</span>`).join('')}${st==='futuro'?'':seloStatus(st)}${!(c.dias||[]).length?'<span class="selo av">sem dia fixo</span>':''}${c.ativo===false?'<span class="selo">inativo</span>':''}</div></div></button>`;}).join('')
     :vazio(DB.clientes.length?'Nada encontrado':'Nenhum cliente',DB.clientes.length?'Tente outro nome, bairro ou dia.':'Cadastre o primeiro cliente para montar a rota.',DB.clientes.length?'':`<button class="btn" onclick="go('clienteForm')">${ic('mais')}Cadastrar cliente</button>`);}
 
 VIEWS.cliente=p=>{const c=cli(p.id);if(!c){back();return;}document.title=c.nome;const tel=soDig(c.tel);const vs=visitasCli(c.id);const ult=vs[0];const aba=p.aba||'visitas';
@@ -736,7 +926,12 @@ VIEWS.cliente=p=>{const c=cli(p.id);if(!c){back();return;}document.title=c.nome;
   let h=cab(esc(c.nome),'',esc(c.rota||'cliente'))+
   `<div class="cartao lista"><div class="kv"><b>Endereço</b><span>${esc(enderecoCompleto(c)||'—')}</span><b>Visitas</b><span>${(c.dias||[]).slice().sort().map(d=>cap(DIAS[d])).join(', ')||'—'}</span><b>Volume</b><span>${c.m3?trimN(c.m3,1)+' m³ ('+fmtN(c.m3*1000)+' litros)':'não informado'}</span><b>Mensal.</b><span>${c.mensal>0?brl(c.mensal)+' · vence dia '+(c.venc||10):'—'}</span>${c.obs?`<b>Obs.</b><span>${esc(c.obs)}</span>`:''}</div></div>
   <div class="atalhos4">${tel?`<a href="tel:${tel}">${ic('fone')}Ligar</a><a href="${waLink(c.tel,'Olá '+primeiro(c.nome)+'!')}" target="_blank">${ic('conversa')}WhatsApp</a>`:`<button ${semTel}>${ic('fone')}Ligar</button><button ${semTel}>${ic('conversa')}WhatsApp</button>`}<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(enderecoCompleto(c))}" target="_blank">${ic('mapa')}Mapa</a><button onclick="go('clienteForm',{id:'${c.id}'})">${ic('lapis')}Editar</button></div>
-  <button class="btn bloco" onclick="novaVisita('${c.id}')">${ic('frasco')}Nova visita / tratamento</button>`;
+  <div class="dupla"><button class="btn" onclick="novaVisita('${c.id}')">${ic('frasco')}Nova visita</button><button class="btn suave" onclick="go('agendaForm',{cid:'${c.id}'})">${ic('calendario')}Agendar avulso</button></div>`;
+  const prox=DB.agenda.filter(a=>a.clienteId===c.id&&a.status!=='cancelado'&&a.data>=isoDate(new Date())).sort((a,b)=>a.data.localeCompare(b.data));
+  if(prox.length)h+=`<div class="secao">${secTopo('Agendados')}${prox.map(avCardHTML).join('')}</div>`;
+  const lc=lucroCliente(c,ymNow());
+  if(lc.receita>0||lc.visitas>0)h+=`<div class="secao">${secTopo('Este mês',`<button class="link" onclick="relatorioSheet('${c.id}')">${ic('imprimir')}Relatório PDF</button>`)}<div class="grade-kpi tres"><div class="kpi"><b class="menor">${brl0(lc.receita)}</b><span>receita</span></div><div class="kpi alerta"><b class="menor">${brl0(lc.custo)}</b><span>produtos (${lc.visitas} visita${lc.visitas===1?'':'s'})</span></div><div class="kpi"><b class="menor" style="color:var(--${lc.lucro>=0?'ok':'perigo'})">${brl0(lc.lucro)}</b><span>lucro bruto</span></div></div>${lc.faltaPreco?`<p class="dica" style="margin:-6px 4px 0">Há produtos sem preço de compra no Estoque.</p>`:''}</div>`;
+  else if(vs.length)h+=`<button class="btn ghost bloco" style="margin-top:12px" onclick="relatorioSheet('${c.id}')">${ic('imprimir')}Relatório do mês em PDF</button>`;
   if(ult)h+=`<div class="secao">${secTopo('Última medição',`<span class="meta">${fmtData(ult.data)}</span>`)}<button class="cartao" style="display:block" onclick="go('visitaVer',{id:'${ult.id}'})"><div class="selos" style="margin:0">${selosMed(ult)}</div></button></div>`;
   h+=`<div class="abas">${[['visitas','Visitas'],['fotos','Fotos'],['pag','Pagamentos']].map(([k,l])=>`<button class="${aba===k?'on':''}" onclick="go('cliente',{id:'${c.id}',aba:'${k}'},true)">${l}</button>`).join('')}</div><div id="abaC"></div>`;
   V(h);
@@ -792,32 +987,53 @@ function salvarCliente(id){const nome=$('#cNome').value.trim();if(!nome)return t
     mensal:num($('#cMen').value)||0,venc:Math.min(31,Math.max(1,parseInt($('#cVen').value)||10)),obs:$('#cObs').value.trim(),ativo:$('#cAtivo').checked});
   save();toast('Cliente salvo');if(novo)go('cliente',{id:c.id},true);else back();}
 async function excluirCliente(id){const c=cli(id);if(!confirm(`Excluir ${c.nome}? As visitas, fotos e pagamentos dele também serão apagados.`))return;
-  DB.clientes=DB.clientes.filter(x=>x.id!==id);DB.visitas=DB.visitas.filter(v=>v.clienteId!==id);DB.pagamentos=DB.pagamentos.filter(p=>p.clienteId!==id);
+  DB.clientes=DB.clientes.filter(x=>x.id!==id);DB.visitas=DB.visitas.filter(v=>v.clienteId!==id);DB.agenda=DB.agenda.filter(a=>a.clienteId!==id);DB.pagamentos=DB.pagamentos.filter(p=>p.clienteId!==id);
   save();try{await idbDelWhere('cliente',id);}catch(e){}toast('Cliente excluído');tab('clientes');}
 
 /* ============ VISITA ============ */
 let VF=null;
 function novaVisita(cid,data){const c=cli(cid);const hoje=isoDate(new Date());const d=data&&data!==hoje?data+'T'+agoraISO().slice(11):agoraISO();
-  VF={id:null,clienteId:cid,data:d,ph:null,cloro:null,alc:null,dur:null,m3:c.m3||null,produtos:[],obs:'',fotos:[],remover:[]};closeSheet();go('visitaForm');}
+  VF={id:null,clienteId:cid,data:d,ph:null,cloro:null,alc:null,dur:null,m3:c.m3||null,produtos:[],obs:'',check:[],etapa:0,fotos:[],remover:[]};closeSheet();go('visitaForm');}
 async function editarVisita(id){const v=DB.visitas.find(x=>x.id===id);const fotos=await idbAll('visita',id);
-  VF=Object.assign(JSON.parse(JSON.stringify(v)),{m3:cli(v.clienteId)?.m3||null,fotos:fotos.map(f=>({id:f.id,tipo:f.tipo,blob:f.blob,data:f.data,existente:true})),remover:[]});go('visitaForm');}
+  VF=Object.assign(JSON.parse(JSON.stringify(v)),{m3:cli(v.clienteId)?.m3||null,fotos:fotos.map(f=>({id:f.id,tipo:f.tipo,blob:f.blob,data:f.data,existente:true})),remover:[],check:(v.check||[]).slice(),etapa:0});go('visitaForm');}
 function medTxt(k,v){const st=stMed(k,v);return 'ideal '+FX[k]+(st==='baixo'?' · abaixo':st==='alto'?' · acima':'');}
+const STEP={ph:.1,cloro:.5,alc:10,dur:10},BASE={ph:7.4,cloro:1,alc:100,dur:250};
 function medInput(src,k,l){const o=src==='VF'?VF:CALC;const v=o[k];
-  return `<div class="med ${stMed(k,v)}" id="m_${k}"><span class="rotulo">${l}</span><input inputmode="decimal" placeholder="—" value="${numIn(v)}" oninput="${src}.${k}=num(this.value);medStatus('${k}',${src}.${k});${src==='VF'?'atualizaDoses()':'calcDoses()'}"><div class="meta" id="ms_${k}">${medTxt(k,v)}</div></div>`;}
+  return `<div class="med ${stMed(k,v)}" id="m_${k}"><span class="rotulo">${l}</span><div class="stepper"><button type="button" onclick="stepMed('${src}','${k}',-1)" aria-label="Diminuir">−</button><input id="mi_${k}" inputmode="decimal" placeholder="—" value="${numIn(v)}" oninput="${src}.${k}=num(this.value);medStatus('${k}',${src}.${k});${src==='VF'?'atualizaDoses()':'calcDoses()'}"><button type="button" onclick="stepMed('${src}','${k}',1)" aria-label="Aumentar">+</button></div><div class="meta" id="ms_${k}">${medTxt(k,v)}</div></div>`;}
+function stepMed(src,k,d){const o=src==='VF'?VF:CALC;let v=o[k];v=v==null?BASE[k]:Math.max(0,+(v+d*STEP[k]).toFixed(1));o[k]=v;$('#mi_'+k).value=numIn(v);medStatus(k,v);src==='VF'?atualizaDoses():calcDoses();}
 function medStatus(k,v){$('#m_'+k).className='med '+stMed(k,v);$('#ms_'+k).textContent=medTxt(k,v);}
 const MEDS_HTML=src=>`<div class="dupla">${medInput(src,'ph','pH')}${medInput(src,'cloro','Cloro livre (ppm)')}${medInput(src,'alc','Alcalinidade (ppm)')}${medInput(src,'dur','Dureza cálcica (ppm)')}</div>`;
 
-VIEWS.visitaForm=()=>{if(!VF){back();return;}const c=cli(VF.clienteId);document.title=VF.id?'Editar visita':'Nova visita';
-  V(cab(esc(c?.nome||''),'',VF.id?'editar visita':'nova visita')+
-  `<div class="cartao lista"><div class="dupla"><label class="bloco"><span class="rotulo">Data e hora</span><input type="datetime-local" value="${VF.data}" onchange="VF.data=this.value"></label><label class="bloco"><span class="rotulo">Volume (m³)</span><input inputmode="decimal" value="${numIn(VF.m3)}" oninput="VF.m3=num(this.value);atualizaDoses()"></label></div></div>
-  <div class="secao">${secTopo('Medições')}<div class="cartao lista">${MEDS_HTML('VF')}</div></div>
-  <div class="secao">${secTopo('Dosagem sugerida')}<div class="cartao lista" id="doses"></div></div>
-  <div class="secao">${secTopo('Produtos aplicados',`<button class="link" onclick="addProd()">${ic('mais')}Produto</button>`)}<div class="cartao lista"><div id="prods"></div><p class="dica">O que for lançado aqui é descontado do estoque ao salvar.</p></div></div>
-  <div class="secao">${secTopo('Fotos')}<div class="cartao lista" id="fotosBox"></div></div>
-  <div class="secao">${secTopo('Observações')}<textarea oninput="VF.obs=this.value" placeholder="Ex.: filtro retrolavado, bomba com barulho…">${esc(VF.obs||'')}</textarea></div>
-  <div class="salvar-fixo"><button class="btn bloco" id="btnSalvarV" onclick="salvarVisita()">${ic('check')}Salvar visita</button></div>
-  <input type="file" id="fileIn" accept="image/*" multiple hidden onchange="fotosEscolhidas(this)">`);
-  atualizaDoses();renderProds();renderFotosForm();};
+const ETAPAS=['Medições','Produtos','Serviço feito','Fotos','Finalizar'];
+VIEWS.visitaForm=()=>{if(!VF){back();return;}const c=cli(VF.clienteId);document.title=VF.id?'Editar visita':'Nova visita';const et=DB.cfg.visitaEtapas!==false;VF.etapa=VF.etapa||0;VF.check=VF.check||[];
+  const E=(i,html)=>`<div class="etapa${et&&i!==VF.etapa?' oculta':''}" data-e="${i}">${html}</div>`;
+  V(cab(esc(c?.nome||''),`<button class="link" onclick="DB.cfg.visitaEtapas=${!et};save();render()">${et?'Ver tudo':'Em etapas'}</button>`,VF.id?'editar visita':'nova visita')+
+  (et?`<div class="etapas-prog" id="etProg"></div>`:'')+
+  E(0,`<div class="cartao lista"><div class="dupla"><label class="bloco"><span class="rotulo">Data e hora</span><input type="datetime-local" value="${VF.data}" onchange="VF.data=this.value"></label><label class="bloco"><span class="rotulo">Volume (m³)</span><input inputmode="decimal" value="${numIn(VF.m3)}" oninput="VF.m3=num(this.value);atualizaDoses()"></label></div></div>
+  <div class="secao">${secTopo('Medições')}<div class="cartao lista">${MEDS_HTML('VF')}</div></div>`)+
+  E(1,`<div class="secao"${et?' style="margin-top:0"':''}>${secTopo('Dosagem sugerida')}<div class="cartao lista" id="doses"></div></div>
+  <div class="secao">${secTopo('Produtos aplicados',`<button class="link" onclick="addProd()">${ic('mais')}Produto</button>`)}<div class="cartao lista"><div id="prods"></div><p class="dica">O que for lançado aqui é descontado do estoque ao salvar.</p></div></div>`)+
+  E(2,`<div class="secao"${et?' style="margin-top:0"':''}>${secTopo('Serviço feito',`<button class="link" onclick="marcarTudo()">Marcar tudo</button>`)}<div class="checks" id="checks"></div></div>`)+
+  E(3,`<div class="secao"${et?' style="margin-top:0"':''}>${secTopo('Fotos')}<div class="cartao lista" id="fotosBox"></div></div>`)+
+  E(4,`<div class="secao"${et?' style="margin-top:0"':''}>${secTopo('Observações')}<textarea oninput="VF.obs=this.value" placeholder="Ex.: bomba com barulho, cliente pediu para trocar a areia…">${esc(VF.obs||'')}</textarea></div>
+  ${et?`<div class="cartao lista" style="margin-top:14px" id="resumoV"></div>`:''}`)+
+  (et?`<div class="salvar-fixo etapa-nav"><button class="btn ghost" id="btnVoltarE" onclick="irEtapa(VF.etapa-1)">${ic('esq')}Voltar</button><button class="btn" id="btnProxE" onclick="irEtapa(VF.etapa+1)">Próximo${ic('dir')}</button></div>`
+     :`<div class="salvar-fixo"><button class="btn bloco" id="btnSalvarV" onclick="salvarVisita()">${ic('check')}Salvar visita</button></div>`)+
+  `<input type="file" id="fileIn" accept="image/*" multiple hidden onchange="fotosEscolhidas(this)">`);
+  atualizaDoses();renderProds();renderFotosForm();renderChecks();if(et)irEtapa(VF.etapa,true);};
+function irEtapa(i,inicio){const n=ETAPAS.length;if(i>=n){salvarVisita();return;}i=Math.max(0,Math.min(n-1,i));VF.etapa=i;
+  $$('.etapa').forEach(e=>e.classList.toggle('oculta',+e.dataset.e!==i));
+  const pg=$('#etProg');if(pg)pg.innerHTML=`<div class="etapas-barra">${ETAPAS.map((t,k)=>`<button class="${k<i?'feita':k===i?'atual':''}" onclick="irEtapa(${k})" aria-label="${t}"></button>`).join('')}</div><div class="meta"><b>Etapa ${i+1} de ${n}</b> · ${ETAPAS[i]}</div>`;
+  const bv=$('#btnVoltarE'),bp=$('#btnProxE');if(bv)bv.style.visibility=i===0?'hidden':'visible';
+  if(bp){bp.innerHTML=i===n-1?`${ic('check')}Salvar visita`:`Próximo${ic('dir')}`;bp.id='btnProxE';}
+  if(i===n-1){const r=$('#resumoV');if(r)r.innerHTML=resumoVF();}
+  if(!inicio)window.scrollTo({top:0,behavior:'smooth'});}
+function resumoVF(){const m=[['pH',VF.ph],['Cloro',VF.cloro],['Alc.',VF.alc],['Dureza',VF.dur]].filter(x=>x[1]!=null);const pr=VF.produtos.filter(p=>p.qtd>0&&item(p.itemId));
+  return `<div class="rotulo" style="margin-bottom:6px">Resumo</div><div class="kv"><b>Medições</b><span>${m.length?m.map(x=>x[0]+' '+trimN(x[1],1)).join(' · '):'—'}</span><b>Produtos</b><span>${pr.length?pr.map(p=>{const it=item(p.itemId);return fmtQ(p.qtd,SMALL[it.un])+' '+esc(it.nome);}).join(' + '):'—'}</span><b>Serviço</b><span>${VF.check.length?VF.check.length+' de '+(DB.cfg.checklist||[]).length+' itens':'—'}</span><b>Fotos</b><span>${VF.fotos.filter(f=>f.tipo==='antes').length} antes · ${VF.fotos.filter(f=>f.tipo==='depois').length} depois</span></div>`;}
+function renderChecks(){const b=$('#checks');if(!b)return;const l=DB.cfg.checklist||[];
+  b.innerHTML=l.length?l.map((t,i)=>`<button type="button" class="chk ${VF.check.includes(t)?'on':''}" onclick="togCheck(${i})"><span class="cx">${ic('check')}</span><span>${esc(t)}</span></button>`).join(''):`<p class="meta">Monte a sua lista em Ajustes → Checklist do serviço.</p>`;}
+function togCheck(i){const t=(DB.cfg.checklist||[])[i];if(!t)return;const k=VF.check.indexOf(t);if(k>=0)VF.check.splice(k,1);else VF.check.push(t);renderChecks();}
+function marcarTudo(){const l=DB.cfg.checklist||[];VF.check=VF.check.length===l.length?[]:l.slice();renderChecks();}
 function atualizaDoses(){const b=$('#doses');if(b)b.innerHTML=dosesHTML(VF.m3,VF,true);}
 function usarDose(tipo,q){const it=DB.estoque.find(i=>i.tipo===tipo);if(!it){toast(`Cadastre no estoque um produto do tipo “${TIPOS[tipo]}”`);return;}
   const qq=it.un==='un'?Math.max(1,Math.round(q/1000)):q;const ex=VF.produtos.find(p=>p.itemId===it.id);
@@ -837,24 +1053,25 @@ async function fotosEscolhidas(inp){const files=[...inp.files];if(!files.length)
 function removerFotoForm(i){const f=VF.fotos[i];if(f.existente)VF.remover.push(f.id);VF.fotos.splice(i,1);renderFotosForm();}
 function movimentar(prods,sinal,motivo,ref){(prods||[]).forEach(p=>{const it=item(p.itemId);if(!it)return;const q=p.qtd/(FACT[it.un]||1)*sinal;
   it.qtd=+(it.qtd+q).toFixed(4);DB.movs.unshift({id:uid(),itemId:it.id,data:agoraISO(),qtd:+q.toFixed(4),motivo,ref});});if(DB.movs.length>500)DB.movs.length=500;}
-async function salvarVisita(){const btn=$('#btnSalvarV');btn.disabled=true;
+async function salvarVisita(){const btn=$('#btnSalvarV')||$('#btnProxE');if(btn)btn.disabled=true;
   try{const c=cli(VF.clienteId);if(VF.m3&&c&&VF.m3!==c.m3)c.m3=VF.m3;
-    const produtos=VF.produtos.filter(p=>p.qtd>0&&item(p.itemId)).map(p=>{const it=item(p.itemId);return {itemId:it.id,nome:it.nome,qtd:p.qtd,un:SMALL[it.un]};});
+    const produtos=VF.produtos.filter(p=>p.qtd>0&&item(p.itemId)).map(p=>{const it=item(p.itemId);return {itemId:it.id,nome:it.nome,qtd:p.qtd,un:SMALL[it.un],custo:it.preco>0?+(p.qtd/(FACT[it.un]||1)*it.preco).toFixed(2):null};});
     let v;if(VF.id){v=DB.visitas.find(x=>x.id===VF.id);movimentar(v.produtos,1,'Estorno (visita editada)',v.id);}else{v={id:uid(),clienteId:VF.clienteId};DB.visitas.push(v);}
-    Object.assign(v,{data:VF.data||agoraISO(),ph:VF.ph,cloro:VF.cloro,alc:VF.alc,dur:VF.dur,produtos,obs:(VF.obs||'').trim()});
+    Object.assign(v,{data:VF.data||agoraISO(),ph:VF.ph,cloro:VF.cloro,alc:VF.alc,dur:VF.dur,produtos,check:(VF.check||[]).slice(),obs:(VF.obs||'').trim()});
     movimentar(produtos,-1,'Visita: '+(c?.nome||''),v.id);
     for(const id of VF.remover)await idbDel(id);
     for(const f of VF.fotos)if(!f.existente)await idbPut({id:f.id,clienteId:v.clienteId,visitaId:v.id,tipo:f.tipo,data:f.data,blob:f.blob});
     v.nFotos=VF.fotos.length;save();
     const baixos=produtos.map(p=>item(p.itemId)).filter(i=>i&&i.min>0&&i.qtd<i.min);VF=null;go('visitaVer',{id:v.id,novo:1},true);
     if(baixos.length)toast(`Atenção: seu estoque de ${baixos[0].nome} está abaixo de ${trimN(baixos[0].min)} ${baixos[0].un}. Hora de repor.`,5000);else toast('Visita salva');
-  }catch(e){console.error(e);toast('Erro ao salvar: '+e.message);btn.disabled=false;}}
+  }catch(e){console.error(e);toast('Erro ao salvar: '+e.message);if(btn)btn.disabled=false;}}
 
 VIEWS.visitaVer=async p=>{const v=DB.visitas.find(x=>x.id===p.id);if(!v){back();return;}const c=cli(v.clienteId);document.title='Visita · '+fmtData(v.data);
   let h=cab(esc(c?.nome||'Cliente removido'),c?.m3?`<span class="selo">${trimN(c.m3,1)} m³</span>`:'',`${DIASL[parseD(v.data).getDay()]}, ${fmtData(v.data)} às ${fmtHora(v.data)}`);
   if(p.novo)h+=`<div class="aviso">${ic('check')}<p><b>Visita salva!</b> Agora é só mandar o resumo para o cliente.</p></div>`;
   h+=`<div class="cartao lista"><div class="rotulo" style="margin-bottom:6px">Medições</div><div class="selos" style="margin:0">${selosMed(v)}</div>
-  ${v.produtos.length?`<div class="rotulo" style="margin:14px 0 2px">Produtos aplicados</div>${v.produtos.map(x=>`<div class="linha-item"><span>${esc(x.nome)}</span><b>${fmtQ(x.qtd,x.un)}</b></div>`).join('')}`:''}
+  ${v.produtos.length?`<div class="rotulo" style="margin:14px 0 2px">Produtos aplicados</div>${v.produtos.map(x=>`<div class="linha-item"><span>${esc(x.nome)}</span><b>${fmtQ(x.qtd,x.un)}</b></div>`).join('')}${custoVisita(v)>0?`<div class="linha-item"><span class="meta">Custo dos produtos</span><b>${brl(custoVisita(v))}</b></div>`:''}`:''}
+  ${(v.check||[]).length?`<div class="rotulo" style="margin:14px 0 6px">Serviço feito</div><div class="chk-lista">${v.check.map(t=>`<span>${ic('check')}${esc(t)}</span>`).join('')}</div>`:''}
   ${v.obs?`<div class="rotulo" style="margin:14px 0 2px">Observações</div><p style="font-size:.9rem">${esc(v.obs)}</p>`:''}</div>
   <div class="secao">${secTopo('Enviar ao cliente',v.enviado?`<span class="selo ok">enviado ${fmtHora(v.enviado)}</span>`:'')}<button class="btn bloco" onclick="enviarTexto('${v.id}')">${ic('conversa')}Resumo no WhatsApp</button><button class="btn ghost bloco" onclick="verCard('${v.id}')">${ic('imagem')}Card com fotos e medições</button><p class="dica">O card junta medições, produtos e as fotos de antes e depois numa imagem só, com a sua marca.</p></div>
   <div class="secao">${secTopo('Fotos')}<div id="vFotos"><p class="meta">Carregando…</p></div></div>
@@ -869,6 +1086,7 @@ function textoVisita(v){const c=cli(v.clienteId);const hoje=v.data.slice(0,10)==
   let t=`Olá ${primeiro(c?.nome)}! Sua piscina foi tratada ${hoje?'hoje':'em '+fmtData(v.data)} (${fmtHora(v.data)}h).\n`;
   if(m.length)t+=`\n💧 Medições: ${m.join(' | ')}`;
   if(v.produtos.length)t+=`\n🧪 Produtos: ${v.produtos.map(p=>fmtQ(p.qtd,p.un)+' '+p.nome).join(' + ')}`;
+  if((v.check||[]).length)t+=`\n✅ Serviço: ${v.check.join(' · ')}`;
   if(v.obs)t+=`\n📝 ${v.obs}`;if(v.nFotos)t+=`\n📸 Fotos do antes e depois em anexo.`;
   t+=`\n\n${DB.cfg.nome}${DB.cfg.tel?' · '+DB.cfg.tel:''}`;return t;}
 function marcarEnviado(id){const v=DB.visitas.find(x=>x.id===id);if(v&&!v.enviado){v.enviado=agoraISO();save();}}
@@ -894,15 +1112,14 @@ function cropCanvas(cv,h){const o=document.createElement('canvas');o.width=cv.wi
 function espaco(x,px){try{x.letterSpacing=px+'px';}catch(e){}}
 function drawMarca(x,X,Y,S,ac,ink){x.save();x.translate(X,Y);x.scale(S/24,S/24);x.lineCap='round';x.lineWidth=2.4;x.strokeStyle=ac;rr(x,2.7,2.7,18.6,18.6,5.2);x.stroke();
   x.lineWidth=2;x.strokeStyle=ink;x.stroke(new Path2D('M6.8 10.2c1.2-1 2.4-1 3.6 0s2.4 1 3.6 0 2.4-1 3.6 0'));x.strokeStyle=ac;x.stroke(new Path2D('M6.8 14.4c1.2-1 2.4-1 3.6 0s2.4 1 3.6 0 2.4-1 3.6 0'));x.restore();}
-async function drawLogo(x,X,Y,S){const lg=await carregarImg(DB.cfg.logo);x.fillStyle='#fff';rr(x,X,Y,S,S,S*.22);x.fill();const s=Math.min((S-16)/lg.naturalWidth,(S-16)/lg.naturalHeight);
-  x.drawImage(lg,X+(S-lg.naturalWidth*s)/2,Y+(S-lg.naturalHeight*s)/2,lg.naturalWidth*s,lg.naturalHeight*s);}
 
 async function gerarCardVisita(v){await fontesProntas();const c=cli(v.clienteId)||{nome:'Cliente'};const cfg=DB.cfg;const W=1080,P=60;
-  const BG='#0F1720',SF='#17222E',SF2='#1E2B39',INK='#E8EEF5',INK2='#9AAABB',AC=acClaro(),AL='#E7A54B';
-  const cv=document.createElement('canvas');cv.width=W;cv.height=3600;const x=cv.getContext('2d');
-  x.fillStyle=BG;x.fillRect(0,0,W,3600);
-  const g=x.createRadialGradient(W/2,-260,40,W/2,-260,1000);g.addColorStop(0,`rgba(${acRGBs()},.42)`);g.addColorStop(1,'rgba(15,23,32,0)');x.fillStyle=g;x.fillRect(0,0,W,1000);
-  let tx=P+150;if(cfg.logo){try{await drawLogo(x,P,58,122);}catch(e){drawMarca(x,P,58,122,AC,INK);}}else drawMarca(x,P,58,122,AC,INK);
+  const BG='#F1F4F8',SF='#FFFFFF',SF2='#E3E9F1',INK='#14202E',INK2='#5A6878',AC='#2462BC',AL='#A35F00';
+  const sombra=(on)=>{x.shadowColor=on?'rgba(16,28,44,.10)':'transparent';x.shadowBlur=on?26:0;x.shadowOffsetY=on?6:0;};
+  const cv=document.createElement('canvas');cv.width=W;cv.height=4200;const x=cv.getContext('2d');
+  x.fillStyle=BG;x.fillRect(0,0,W,4200);
+  const g=x.createRadialGradient(W/2,-260,40,W/2,-260,1000);g.addColorStop(0,'rgba(36,98,188,.20)');g.addColorStop(1,'rgba(241,244,248,0)');x.fillStyle=g;x.fillRect(0,0,W,1000);
+  let tx=P+150;drawMarca(x,P,58,122,AC,INK);
   x.fillStyle=INK;x.font=`700 78px ${FD}`;x.fillText(cfg.nome||'Polidoro',tx,132,W-tx-P);
   x.fillStyle=INK2;x.font=`800 24px ${FONT}`;espaco(x,4);x.fillText('RELATÓRIO DE TRATAMENTO',tx,174,W-tx-P);espaco(x,0);
   let y=292;x.fillStyle=INK2;x.font=`800 25px ${FONT}`;espaco(x,3);x.fillText(`${DIASL[parseD(v.data).getDay()]}, ${fmtData(v.data)} · ${fmtHora(v.data)}`.toUpperCase(),P,y);espaco(x,0);
@@ -910,23 +1127,30 @@ async function gerarCardVisita(v){await fontesProntas();const c=cli(v.clienteId)
   const meds=[['pH',v.ph,'ph',''],['Cloro',v.cloro,'cloro','ppm'],['Alcalinidade',v.alc,'alc','ppm'],['Dureza',v.dur,'dur','ppm']].filter(m=>m[1]!=null);
   if(meds.length){const gap=18,tw=(W-2*P-gap*(meds.length-1))/meds.length,th=210;
     meds.forEach(([l,val,k,u],i)=>{const X=P+i*(tw+gap);const st=stMed(k,val);const cor=st==='ok'?AC:AL;
-      x.fillStyle=SF;rr(x,X,y,tw,th,26);x.fill();x.strokeStyle=st==='ok'?`rgba(${acRGBs()},.55)`:'rgba(231,165,75,.55)';x.lineWidth=2;rr(x,X+1,y+1,tw-2,th-2,25);x.stroke();
-      x.textAlign='center';x.fillStyle=INK2;x.font=`800 21px ${FONT}`;espaco(x,2);x.fillText(l.toUpperCase(),X+tw/2,y+52,tw-16);espaco(x,0);
-      x.fillStyle=cor;x.font=`700 96px ${FD}`;x.fillText(trimN(val,1),X+tw/2,y+138,tw-16);
-      x.font=`700 22px ${FONT}`;x.fillText((u?u+' · ':'')+(st==='ok'?'ideal':st==='baixo'?'baixo':'alto'),X+tw/2,y+180,tw-16);x.textAlign='left';});
-    y+=th+70;}
+      sombra(1);x.fillStyle=SF;rr(x,X,y,tw,th,26);x.fill();sombra(0);
+      x.fillStyle=st==='ok'?'rgba(36,98,188,.9)':'rgba(163,95,0,.9)';rr(x,X,y,tw,10,5);x.save();rr(x,X,y,tw,th,26);x.clip();x.fillRect(X,y,tw,9);x.restore();
+      x.textAlign='center';x.fillStyle=INK2;x.font=`800 21px ${FONT}`;espaco(x,2);x.fillText(l.toUpperCase(),X+tw/2,y+56,tw-16);espaco(x,0);
+      x.fillStyle=cor;x.font=`700 96px ${FD}`;x.fillText(trimN(val,1),X+tw/2,y+142,tw-16);
+      x.font=`700 22px ${FONT}`;x.fillText((u?u+' · ':'')+(st==='ok'?'ideal':st==='baixo'?'baixo':'alto'),X+tw/2,y+182,tw-16);x.textAlign='left';});
+    y+=th+86;}
   if(v.produtos.length){x.fillStyle=INK;x.font=`700 58px ${FD}`;x.fillText('Produtos aplicados',P,y);y+=24;
-    const ch=24+v.produtos.length*66;x.fillStyle=SF;rr(x,P,y,W-2*P,ch,24);x.fill();let ly=y+60;
+    const ch=24+v.produtos.length*66;sombra(1);x.fillStyle=SF;rr(x,P,y,W-2*P,ch,24);x.fill();sombra(0);let ly=y+60;
     v.produtos.forEach((p,i)=>{if(i){x.fillStyle=SF2;x.fillRect(P+26,ly-48,W-2*P-52,2);}x.fillStyle=INK;x.font=`600 30px ${FONT}`;x.fillText(p.nome,P+30,ly,W-2*P-320);
       x.textAlign='right';x.fillStyle=AC;x.font=`700 52px ${FD}`;x.fillText(fmtQ(p.qtd,p.un),W-P-30,ly+4);x.textAlign='left';ly+=66;});y+=ch+56;}
+  const chk=v.check||[];
+  if(chk.length){x.fillStyle=INK;x.font=`700 58px ${FD}`;x.fillText('Serviço feito',P,y);y+=24;const rows=Math.ceil(chk.length/2);const ch=28+rows*62;
+    sombra(1);x.fillStyle=SF;rr(x,P,y,W-2*P,ch,24);x.fill();sombra(0);const cw=(W-2*P-60)/2;
+    chk.forEach((t,i)=>{const X=P+30+(i%2)*(cw+0),Y=y+50+Math.floor(i/2)*62;x.fillStyle='rgba(36,98,188,.12)';x.beginPath();x.arc(X+16,Y-9,17,0,7);x.fill();
+      x.strokeStyle=AC;x.lineWidth=4;x.lineCap='round';x.lineJoin='round';x.beginPath();x.moveTo(X+8,Y-9);x.lineTo(X+14,Y-3);x.lineTo(X+25,Y-16);x.stroke();
+      x.fillStyle=INK;x.font=`600 27px ${FONT}`;x.fillText(t,X+46,Y,cw-56);});y+=ch+56;}
   if(v.obs){x.fillStyle=INK2;x.font=`600 29px ${FONT}`;y=wrap(x,'Obs.: '+v.obs,P,y,W-2*P,42)+24;}
   const fotos=await idbAll('visita',v.id);fotos.sort((a,b)=>a.data.localeCompare(b.data));
   const sel=[fotos.find(f=>f.tipo==='antes'),fotos.filter(f=>f.tipo==='depois').pop()].filter(Boolean);
   if(sel.length){const gap=20,w=sel.length===2?(W-2*P-gap)/2:W-2*P,h=sel.length===2?w*1.25:w*.72;
     for(let i=0;i<sel.length;i++){const f=sel[i];const u=URL.createObjectURL(f.blob);const im=await carregarImg(u);URL.revokeObjectURL(u);const X=P+i*(w+gap);
-      x.save();rr(x,X,y,w,h,28);x.clip();cover(x,im,X,y,w,h);x.restore();
+      sombra(1);x.fillStyle=SF;rr(x,X,y,w,h,28);x.fill();sombra(0);x.save();rr(x,X,y,w,h,28);x.clip();cover(x,im,X,y,w,h);x.restore();
       const lab=f.tipo==='antes'?'ANTES':'DEPOIS';x.font=`800 26px ${FONT}`;espaco(x,3);const lw=x.measureText(lab).width+44;
-      x.fillStyle=f.tipo==='antes'?AL:AC;rr(x,X+18,y+18,lw,52,26);x.fill();x.fillStyle='#12101a';x.fillText(lab,X+40,y+54);espaco(x,0);}
+      x.fillStyle=f.tipo==='antes'?'#F4B860':AC;rr(x,X+18,y+18,lw,52,26);x.fill();x.fillStyle=f.tipo==='antes'?'#3B2600':'#fff';x.fillText(lab,X+40,y+54);espaco(x,0);}
     y+=h+46;}
   x.fillStyle=SF2;x.fillRect(P,y,W-2*P,2);y+=56;x.textAlign='center';x.fillStyle=INK2;x.font=`600 27px ${FONT}`;
   const rod=[cfg.responsavel,cfg.tel,cfg.cnpj?'CNPJ '+cfg.cnpj:''].filter(Boolean).join('  ·  ');x.fillText(rod||cfg.nome,W/2,y,W-2*P);x.textAlign='left';y+=54;
@@ -968,15 +1192,15 @@ VIEWS.estoque=()=>{document.title='Estoque';const rank=i=>i.qtd<=0?0:(i.min>0&&i
   h+=`<div class="grade-kpi tres"><div class="kpi"><b>${DB.estoque.length}</b><span>produtos</span></div><div class="kpi ${baixos?'alerta':''}"><b>${baixos}</b><span>para repor</span></div><div class="kpi"><b>${DB.movs.filter(m=>m.data.slice(0,7)===ymNow()&&m.qtd<0).length}</b><span>saídas no mês</span></div></div>`;
   h+=`<p class="dica" style="margin:-4px 4px 12px">Os produtos lançados nas visitas são abatidos daqui automaticamente.</p>`;
   h+=l.map(i=>{const st=i.qtd<=0?'perigo':(i.min>0&&i.qtd<i.min?'alerta':'ok');const pct=i.min>0?Math.min(100,i.qtd/(i.min*3)*100):100;
-    return `<div class="cartao lista"><div style="display:flex;align-items:center;gap:12px"><div style="flex:1;min-width:0"><h3 class="ell">${esc(i.nome)}</h3><div class="meta">${TIPOS[i.tipo]||'Outro'} · alerta abaixo de ${trimN(i.min||0)} ${i.un}</div></div><div style="text-align:right"><div style="font-family:var(--fd);font-size:2rem;font-weight:700;line-height:1;color:var(--${st==='ok'?'ac':st})">${trimN(i.qtd)} <span style="font-size:1.2rem">${i.un}</span></div>${st!=='ok'?`<span class="selo ${st}">${st==='perigo'?'zerado':'repor'}</span>`:''}</div></div>
+    return `<div class="cartao lista"><div style="display:flex;align-items:center;gap:12px"><div style="flex:1;min-width:0"><h3 class="ell">${esc(i.nome)}</h3><div class="meta">${TIPOS[i.tipo]||'Outro'} · alerta abaixo de ${trimN(i.min||0)} ${i.un}</div><div class="meta">${i.preco>0?brl(i.preco)+' por '+i.un:'<span style="color:var(--alerta)">sem preço de compra</span>'}</div></div><div style="text-align:right"><div style="font-family:var(--fd);font-size:2rem;font-weight:700;line-height:1;color:var(--${st==='ok'?'ac':st})">${trimN(i.qtd)} <span style="font-size:1.2rem">${i.un}</span></div>${st!=='ok'?`<span class="selo ${st}">${st==='perigo'?'zerado':'repor'}</span>`:''}</div></div>
     <div class="prog ${st==='ok'?'':st}"><i style="width:${Math.max(0,pct)}%"></i></div>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn mini" onclick="entradaEst('${i.id}')">${ic('mais')}Entrada</button><button class="btn mini ghost" onclick="ajustarEst('${i.id}')">Contagem</button><button class="btn mini ghost" onclick="itemForm('${i.id}')">${ic('lapis')}Editar</button></div></div>`;}).join('');
   const movs=DB.movs.slice(0,25);
   if(movs.length)h+=`<div class="secao">${secTopo('Movimentações')}<div class="cartao lista">${movs.map(m=>{const it=item(m.itemId);
     return `<div class="linha-item"><div style="flex:1;min-width:0"><div class="ell">${esc(it?.nome||'(produto removido)')}</div><div class="meta ell">${fmtData(m.data)} ${fmtHora(m.data)} · ${esc(m.motivo||'')}</div></div><b style="color:var(--${m.qtd<0?'perigo':'ok'});white-space:nowrap">${m.qtd>0?'+':''}${trimN(m.qtd,3)} ${it?.un||''}</b></div>`;}).join('')}</div></div>`;
   V(h);};
-function entradaEst(id){const i=item(id);openSheet('Entrada',`<p class="meta" style="margin-bottom:12px">${esc(i.nome)}</p><label class="bloco"><span class="rotulo">Quantidade que chegou (${i.un})</span><input id="eQ" inputmode="decimal"></label><label class="bloco"><span class="rotulo">Observação</span><input id="eObs" placeholder="Ex.: compra na loja X"></label><button class="btn bloco" style="margin-top:6px" onclick="salvarEntrada('${id}')">${ic('check')}Lançar entrada</button>`);setTimeout(()=>$('#eQ')?.focus(),150);}
-function salvarEntrada(id){const q=num($('#eQ').value);if(!q)return toast('Informe a quantidade');const i=item(id);i.qtd=+(i.qtd+q).toFixed(4);
+function entradaEst(id){const i=item(id);openSheet('Entrada',`<p class="meta" style="margin-bottom:12px">${esc(i.nome)}</p><label class="bloco"><span class="rotulo">Quantidade que chegou (${i.un})</span><input id="eQ" inputmode="decimal"></label><label class="bloco"><span class="rotulo">Valor pago no total (R$) · opcional</span><input id="eTot" inputmode="decimal" placeholder="atualiza o preço de compra"></label><label class="bloco"><span class="rotulo">Observação</span><input id="eObs" placeholder="Ex.: compra na loja X"></label><button class="btn bloco" style="margin-top:6px" onclick="salvarEntrada('${id}')">${ic('check')}Lançar entrada</button>`);setTimeout(()=>$('#eQ')?.focus(),150);}
+function salvarEntrada(id){const q=num($('#eQ').value);if(!q)return toast('Informe a quantidade');const i=item(id);i.qtd=+(i.qtd+q).toFixed(4);const tot=num($('#eTot').value);if(tot>0)i.preco=+(tot/q).toFixed(2);
   DB.movs.unshift({id:uid(),itemId:id,data:agoraISO(),qtd:q,motivo:$('#eObs').value.trim()||'Entrada'});save();closeSheet();render();toast('Entrada lançada');}
 function ajustarEst(id){const i=item(id);openSheet('Contagem',`<p class="meta" style="margin-bottom:12px">${esc(i.nome)} · informe quanto existe de verdade agora. O app registra a diferença.</p><label class="bloco"><span class="rotulo">Quantidade real (${i.un})</span><input id="aQ" inputmode="decimal" value="${numIn(i.qtd)}"></label><button class="btn bloco" style="margin-top:6px" onclick="salvarAjuste('${id}')">${ic('check')}Salvar contagem</button>`);}
 function salvarAjuste(id){const q=num($('#aQ').value);if(q==null)return toast('Informe a quantidade');const i=item(id);const d=+(q-i.qtd).toFixed(4);
@@ -984,31 +1208,86 @@ function salvarAjuste(id){const q=num($('#aQ').value);if(q==null)return toast('I
 function itemForm(id){const i=id?item(id):{nome:'',tipo:'outro',un:'kg',min:0,qtd:0};
   openSheet(id?'Editar produto':'Novo produto',`<label class="bloco"><span class="rotulo">Nome</span><input id="iNome" value="${esc(i.nome)}" placeholder="Ex.: Cloro granulado"></label>
   <label class="bloco"><span class="rotulo">Tipo (usado pela calculadora)</span><select id="iTipo">${Object.entries(TIPOS).map(([k,l])=>`<option value="${k}" ${i.tipo===k?'selected':''}>${l}</option>`).join('')}</select></label>
-  <div class="dupla"><label class="bloco"><span class="rotulo">Unidade</span><select id="iUn">${['kg','g','L','ml','un'].map(u=>`<option ${i.un===u?'selected':''}>${u}</option>`).join('')}</select></label><label class="bloco"><span class="rotulo">Alerta abaixo de</span><input id="iMin" inputmode="decimal" value="${numIn(i.min)}"></label></div>
+  <div class="dupla"><label class="bloco"><span class="rotulo">Unidade</span><select id="iUn" onchange="$('#iPrecoUn').textContent=this.value">${['kg','g','L','ml','un'].map(u=>`<option ${i.un===u?'selected':''}>${u}</option>`).join('')}</select></label><label class="bloco"><span class="rotulo">Alerta abaixo de</span><input id="iMin" inputmode="decimal" value="${numIn(i.min)}"></label></div>
+  <label class="bloco"><span class="rotulo">Preço de compra por <span id="iPrecoUn">${i.un}</span> (R$)</span><input id="iPreco" inputmode="decimal" placeholder="Ex.: 32,90" value="${numIn(i.preco)}"></label><p class="dica" style="margin:-4px 2px 10px">Usado para calcular o custo de cada visita e o lucro por cliente.</p>
   ${id?'':`<label class="bloco"><span class="rotulo">Quantidade atual</span><input id="iQtd" inputmode="decimal" placeholder="0"></label>`}
   <button class="btn bloco" style="margin-top:6px" onclick="salvarItem('${id||''}')">${ic('check')}Salvar</button>${id?`<button class="btn perigo bloco" onclick="excluirItem('${id}')">${ic('lixo')}Excluir produto</button>`:''}`);}
 function salvarItem(id){const nome=$('#iNome').value.trim();if(!nome)return toast('Informe o nome');let i=id?item(id):null;
   if(!i){i={id:uid(),qtd:num($('#iQtd').value)||0};DB.estoque.push(i);if(i.qtd)DB.movs.unshift({id:uid(),itemId:i.id,data:agoraISO(),qtd:i.qtd,motivo:'Estoque inicial'});}
-  Object.assign(i,{nome,tipo:$('#iTipo').value,un:$('#iUn').value,min:num($('#iMin').value)||0});save();closeSheet();render();toast('Produto salvo');}
+  Object.assign(i,{nome,tipo:$('#iTipo').value,un:$('#iUn').value,min:num($('#iMin').value)||0,preco:num($('#iPreco').value)||0});save();closeSheet();render();toast('Produto salvo');}
 function excluirItem(id){if(!confirm('Excluir este produto do estoque?'))return;DB.estoque=DB.estoque.filter(i=>i.id!==id);save();closeSheet();render();}
+
+/* ============ CUSTO E LUCRO ============ */
+function custoProd(p){if(p.custo!=null)return p.custo;const it=item(p.itemId);return it&&it.preco>0?p.qtd/(FACT[it.un]||1)*it.preco:0;}
+const semPrecoProd=p=>p.custo==null&&!(item(p.itemId)?.preco>0);
+const custoVisita=v=>(v.produtos||[]).reduce((s,p)=>s+custoProd(p),0);
+function lucroCliente(c,ym){const vs=DB.visitas.filter(v=>v.clienteId===c.id&&v.data.startsWith(ym));
+  const avs=DB.agenda.filter(a=>a.clienteId===c.id&&a.data.startsWith(ym)&&a.status!=='cancelado'&&a.valor>0);
+  const mensal=c.mensal>0&&c.ativo!==false&&(c.desde||'0000')<=ym?c.mensal:0;const receita=mensal+avs.reduce((s,a)=>s+a.valor,0);
+  const custo=vs.reduce((s,v)=>s+custoVisita(v),0);const faltaPreco=vs.some(v=>(v.produtos||[]).some(semPrecoProd));
+  return {receita,custo,lucro:receita-custo,visitas:vs.length,faltaPreco,margem:receita>0?(receita-custo)/receita:null};}
+function lucroHTML(ym){const rows=DB.clientes.map(c=>({c,...lucroCliente(c,ym)})).filter(r=>r.receita>0||r.visitas>0).sort((a,b)=>a.lucro-b.lucro);
+  if(!rows.length)return '';const R=rows.reduce((s,r)=>s+r.receita,0),C=rows.reduce((s,r)=>s+r.custo,0);const falta=rows.some(r=>r.faltaPreco);
+  let h=`<div class="secao">${secTopo('Custo e lucro',`<span class="meta">produtos aplicados</span>`)}
+  <div class="grade-kpi tres"><div class="kpi"><b class="menor">${brl0(R)}</b><span>receita do mês</span></div><div class="kpi alerta"><b class="menor">${brl0(C)}</b><span>custo de produtos</span></div><div class="kpi"><b class="menor" style="color:var(--${R-C>=0?'ok':'perigo'})">${brl0(R-C)}</b><span>lucro bruto</span></div></div>`;
+  if(falta)h+=`<button class="aviso alerta" onclick="tab('estoque')">${ic('alerta')}<p>Alguns produtos estão sem <b>preço de compra</b>. Cadastre no Estoque para o custo ficar certo.</p></button>`;
+  h+=rows.map(r=>`<button class="cartao" onclick="go('cliente',{id:'${r.c.id}'})"><div class="cartao-txt"><h3 class="ell">${esc(r.c.nome)}</h3><div class="meta">${r.visitas} visita(s) · receita ${brl(r.receita)} · produtos ${brl(r.custo)}</div>
+    <div class="barra-lucro"><i style="width:${r.receita>0?Math.max(0,Math.min(100,r.custo/r.receita*100)):100}%"></i></div></div><div style="text-align:right"><b style="color:var(--${r.lucro>=0?'ok':'perigo'});white-space:nowrap">${brl(r.lucro)}</b>${r.margem!=null?`<div class="meta">${Math.round(r.margem*100)}%</div>`:''}</div></button>`).join('');
+  return h+`<p class="dica">Receita = mensalidade + avulsos do mês. Lucro bruto = receita − produtos aplicados (sem combustível e mão de obra). A barra mostra quanto da receita foi para produtos.</p></div>`;}
+
+/* ============ RELATÓRIO MENSAL (PDF) ============ */
+function relatorioSheet(cid){const c=cli(cid);const ms=[...new Set(DB.visitas.filter(v=>v.clienteId===cid).map(v=>v.data.slice(0,7)))].sort().reverse();const atual=ymNow();if(!ms.includes(atual))ms.unshift(atual);
+  openSheet('Relatório do mês',`<p class="meta" style="margin-bottom:12px">${esc(c.nome)}</p><label class="bloco"><span class="rotulo">Mês</span><select id="rlMes">${ms.map(m=>`<option value="${m}">${cap(mesNome(m))} · ${DB.visitas.filter(v=>v.clienteId===cid&&v.data.startsWith(m)).length} visita(s)</option>`).join('')}</select></label>
+  <label class="troca"><input type="checkbox" id="rlFotos" checked> Incluir as fotos de antes e depois</label>
+  <button class="btn bloco" style="margin-top:14px" onclick="gerarRelatorio('${cid}',$('#rlMes').value,$('#rlFotos').checked)">${ic('imprimir')}Gerar PDF</button>
+  <p class="dica">Abre a tela de impressão. Escolha <b>Salvar como PDF</b> e mande o arquivo pelo WhatsApp ou e-mail.</p>`);}
+async function gerarRelatorio(cid,ym,comFotos){const c=cli(cid);const cfg=DB.cfg;const vs=DB.visitas.filter(v=>v.clienteId===cid&&v.data.startsWith(ym)).sort((a,b)=>a.data.localeCompare(b.data));
+  closeSheet();toast('Montando o relatório…',1500);
+  const med=k=>{const l=vs.map(v=>v[k]).filter(x=>x!=null);return l.length?trimN(l.reduce((s,x)=>s+x,0)/l.length,1):'—';};
+  const cel=(k,v)=>v==null?'—':`<span class="${stMed(k,v)==='ok'?'':'fora'}">${trimN(v,1)}</span>`;
+  let fotosHTML='';let nF=0;
+  if(comFotos){for(const v of vs){const fs=(await idbAll('visita',v.id)).sort((a,b)=>a.data.localeCompare(b.data));const sel=[fs.find(f=>f.tipo==='antes'),fs.filter(f=>f.tipo==='depois').pop()].filter(Boolean);if(!sel.length)continue;nF+=sel.length;
+    fotosHTML+=`<div class="rel-fotos"><div class="rel-fdata">${DIASL[parseD(v.data).getDay()]}, ${fmtData(v.data)}</div><div class="rel-fpar">${sel.map(f=>`<figure><img src="${URL.createObjectURL(f.blob)}" alt=""><figcaption>${f.tipo==='antes'?'Antes':'Depois'}</figcaption></figure>`).join('')}</div></div>`;}}
+  const tot=vs.reduce((s,v)=>s+(v.nFotos||0),0);
+  const html=`<div class="rel">
+  <header class="rel-hd"><span class="rel-marca" style="--ink:#14202E;--ac:#2462BC">${MARCA}</span><div class="rel-emp"><div class="rel-nome">${esc(cfg.nome)}</div><div class="rel-mt">${[cfg.responsavel,cfg.cnpj?'CNPJ '+cfg.cnpj:'',cfg.tel].filter(Boolean).map(esc).join(' · ')}</div></div><div class="rel-tit">Relatório mensal<b>${cap(mesNome(ym)).replace('/',' de ')}</b></div></header>
+  <section class="rel-cli"><div><span>Cliente</span><b>${esc(c.nome)}</b></div><div><span>Endereço</span>${esc(enderecoCompleto(c)||'—')}</div><div><span>Piscina</span>${c.m3?trimN(c.m3,1)+' m³ ('+fmtN(c.m3*1000)+' litros)':'—'}</div></section>
+  <div class="rel-kpis"><div><b>${vs.length}</b>visitas</div><div><b>${med('ph')}</b>pH médio</div><div><b>${med('cloro')}</b>cloro médio (ppm)</div><div><b>${tot}</b>fotos</div></div>
+  ${vs.length?`<table class="rel-tab"><thead><tr><th>Data</th><th>pH</th><th>Cloro</th><th>Alcal.</th><th>Dureza</th><th>Produtos aplicados</th></tr></thead><tbody>${vs.map(v=>`<tr><td><b>${fmtData(v.data).slice(0,5)}</b><br><small>${DIAS[parseD(v.data).getDay()]} · ${fmtHora(v.data)}</small></td><td>${cel('ph',v.ph)}</td><td>${cel('cloro',v.cloro)}</td><td>${cel('alc',v.alc)}</td><td>${cel('dur',v.dur)}</td><td>${v.produtos.length?v.produtos.map(p=>fmtQ(p.qtd,p.un)+' '+esc(p.nome)).join('<br>'):'—'}</td></tr>${(v.check||[]).length||v.obs?`<tr class="rel-sub"><td></td><td colspan="5">${(v.check||[]).length?`<span class="rel-chk">✓ ${v.check.map(esc).join(' · ✓ ')}</span>`:''}${v.obs?`<div class="rel-obs">Obs.: ${esc(v.obs)}</div>`:''}</td></tr>`:''}`).join('')}</tbody></table>
+  <p class="rel-nota">Faixas ideais: pH ${FX.ph} · cloro livre ${FX.cloro} · alcalinidade ${FX.alc} · dureza cálcica ${FX.dur}. Valores <span class="fora">destacados</span> estavam fora da faixa no momento da medição e foram corrigidos com os produtos indicados.</p>`:`<p class="rel-nota">Nenhuma visita registrada neste mês.</p>`}
+  ${fotosHTML?`<h2 class="rel-h2">Fotos do serviço</h2>${fotosHTML}`:''}
+  <footer class="rel-pe"><div class="rel-ass"><div class="rel-assin">${esc(cfg.responsavel||cfg.nome)}</div><hr><div>${esc(cfg.responsavel||cfg.nome)}${cfg.cnpj?' · CNPJ '+esc(cfg.cnpj):''}</div></div><div class="rel-gerado">${esc(cfg.cidade?cfg.cidade+', ':'')}${dataLonga(isoDate(new Date()))}</div></footer></div>`;
+  const pa=$('#printArea');pa.innerHTML=html;
+  await Promise.all([...pa.querySelectorAll('img')].map(im=>im.complete?1:new Promise(r=>{im.onload=im.onerror=r;})));
+  if(document.fonts?.ready)await document.fonts.ready;
+  document.body.classList.add('printing','print-rel');const tt=document.title;document.title=`Relatório ${c.nome} - ${mesNome(ym).replace('/','-')}`;
+  window.addEventListener('afterprint',()=>{document.body.classList.remove('printing','print-rel');document.title=tt;pa.querySelectorAll('img').forEach(im=>URL.revokeObjectURL(im.src));},{once:true});
+  setTimeout(()=>window.print(),80);}
 
 /* ============ FINANCEIRO / RECIBOS ============ */
 VIEWS.financeiro=p=>{document.title='Financeiro';const ym=p.ym||ymNow();
   const rows=DB.clientes.filter(c=>c.ativo!==false&&c.mensal>0&&(c.desde||'0000')<=ym).sort(byNome).map(c=>({c,st:statusMes(c,ym),pg:pagMes(c.id,ym)}));
   const recebido=DB.pagamentos.filter(x=>x.data.slice(0,7)===ym).reduce((s,x)=>s+x.valor,0);
   const aVencer=rows.filter(r=>r.st==='pendente'||r.st==='futuro').reduce((s,r)=>s+r.c.mensal,0);
-  const atraso=rows.filter(r=>r.st==='atrasado').reduce((s,r)=>s+r.c.mensal,0);
+  const avs=DB.agenda.filter(a=>a.data.startsWith(ym)&&a.status!=='cancelado'&&a.valor>0&&cli(a.clienteId)).sort((a,b)=>(a.data+pad(horaMin(a.hora))).localeCompare(b.data+pad(horaMin(b.hora))));
+  const atraso=rows.filter(r=>r.st==='atrasado').reduce((s,r)=>s+r.c.mensal,0)+avs.filter(a=>stPagAv(a)==='atrasado').reduce((s,a)=>s+a.valor,0);
+  const aVencerAv=avs.filter(a=>['futuro','pendente'].includes(stPagAv(a))).reduce((s,a)=>s+a.valor,0);
   const k=n=>brl(n).replace(/\s/g,' ');
-  let h=cab('Financeiro',`<button class="btn mini ghost" onclick="avulsoSheet()">${ic('recibo')}Avulso</button>`,'mensalidades e recibos')+
+  let h=cab('Financeiro',`<div style="display:flex;gap:6px;flex:none"><button class="btn mini ghost" onclick="avulsoSheet()">${ic('recibo')}Recibo</button><button class="btn mini" onclick="go('agendaForm',{})">${ic('mais')}Avulso</button></div>`,'mensalidades, avulsos e recibos')+
   `<div class="mes-topo"><button class="ico caixa" onclick="go('financeiro',{ym:'${addMes(ym,-1)}'},true)" aria-label="Mês anterior">${ic('esq')}</button><h2>${cap(mesNome(ym).replace('/',' de '))}</h2><button class="ico caixa" onclick="go('financeiro',{ym:'${addMes(ym,1)}'},true)" aria-label="Próximo mês">${ic('dir')}</button></div>
-  <div class="grade-kpi tres"><div class="kpi"><b class="menor">${k(recebido)}</b><span>recebido</span></div><div class="kpi alerta"><b class="menor">${k(aVencer)}</b><span>a vencer</span></div><div class="kpi ${atraso?'perigo':''}"><b class="menor">${k(atraso)}</b><span>em atraso</span></div></div>`;
+  <div class="grade-kpi tres"><div class="kpi"><b class="menor">${k(recebido)}</b><span>recebido</span></div><div class="kpi alerta"><b class="menor">${k(aVencer+aVencerAv)}</b><span>a vencer</span></div><div class="kpi ${atraso?'perigo':''}"><b class="menor">${k(atraso)}</b><span>em atraso</span></div></div>`;
   h+=`<div class="secao" style="margin-top:8px">${secTopo('Mensalidades',`<span class="meta">${rows.filter(r=>r.pg).length} de ${rows.length} pagas</span>`)}`;
   h+=rows.length?rows.map(({c,st,pg})=>`<div class="cartao"><div class="cartao-txt" onclick="go('cliente',{id:'${c.id}',aba:'pag'})"><h3 class="ell">${esc(c.nome)}</h3><div class="meta">${brl(c.mensal)} · vence dia ${c.venc||10}</div><div class="selos">${seloStatus(st)}${pg?`<span class="selo">${fmtData(pg.data).slice(0,5)} · ${esc(pg.forma)}</span>`:''}</div></div>
     ${pg?`<button class="btn mini ghost" onclick="verRecibo('${pg.id}')">${ic('recibo')}Recibo</button>`:`<div style="display:flex;flex-direction:column;gap:6px"><button class="btn mini" onclick="receberSheet('${c.id}','${ym}')">Receber</button><button class="btn mini ${st==='atrasado'?'perigo':'ghost'}" onclick="cobrar('${c.id}','${ym}')">${ic('sino')}Cobrar</button></div>`}</div>`).join('')
     :vazio('Sem mensalidades','Nenhum cliente com mensalidade neste mês.');
   h+=`</div>`;
-  const av=DB.pagamentos.filter(x=>!x.ref&&x.data.slice(0,7)===ym).sort((a,b)=>b.data.localeCompare(a.data));
-  if(av.length)h+=`<div class="secao">${secTopo('Serviços avulsos')}${av.map(pg=>`<button class="cartao" onclick="verRecibo('${pg.id}')">${dataBloco(pg.data)}<div class="cartao-txt"><h3 class="ell">${esc(pg.pagador)}</h3><div class="meta ell">${esc(pg.descricao||'')}</div></div><b>${brl(pg.valor)}</b></button>`).join('')}</div>`;
+  h+=`<div class="secao">${secTopo('Atendimentos avulsos',`<span class="meta">${avs.filter(a=>pagAv(a)).length} de ${avs.length} pagos</span>`)}`+(avs.length?avs.map(a=>{const c=cli(a.clienteId);const sp=stPagAv(a);const pg=pagAv(a);
+    return `<div class="cartao">${dataBloco(a.data)}<div class="cartao-txt" onclick="go('agendaForm',{id:'${a.id}'})"><h3 class="ell">${esc(c.nome)}</h3><div class="meta ell">${a.hora?a.hora+' · ':''}${esc(a.servico)} · ${brl(a.valor)}</div><div class="selos">${SELO_AV[stAv(a)]}${seloPag(sp)}${pg?`<span class="selo">${fmtData(pg.data).slice(0,5)} · ${esc(pg.forma)}</span>`:''}</div></div>
+    ${pg?`<button class="btn mini ghost" onclick="verRecibo('${pg.id}')">${ic('recibo')}Recibo</button>`:`<div style="display:flex;flex-direction:column;gap:6px"><button class="btn mini" onclick="receberAv('${a.id}')">Receber</button><button class="btn mini ${sp==='atrasado'?'perigo':'ghost'}" onclick="avisarAv('${a.id}')">${ic('sino')}${sp==='futuro'?'Avisar':'Cobrar'}</button></div>`}</div>`;}).join(''):vazio('Sem avulsos','Os atendimentos avulsos agendados neste mês aparecem aqui.',`<button class="btn" onclick="go('agendaForm',{})">${ic('mais')}Agendar avulso</button>`))+`</div>`;
+  const av=DB.pagamentos.filter(x=>!x.ref&&!x.agendaId&&x.data.slice(0,7)===ym).sort((a,b)=>b.data.localeCompare(a.data));
+  const lucroBloco=lucroHTML(ym);
+  if(av.length)h+=`<div class="secao">${secTopo('Outros recebimentos')}${av.map(pg=>`<button class="cartao" onclick="verRecibo('${pg.id}')">${dataBloco(pg.data)}<div class="cartao-txt"><h3 class="ell">${esc(pg.pagador)}</h3><div class="meta ell">${esc(pg.descricao||'')}</div></div><b>${brl(pg.valor)}</b></button>`).join('')}</div>`;
+  h+=lucroBloco;
   V(h);};
 function pagsCliHTML(c){const l=DB.pagamentos.filter(p=>p.clienteId===c.id).sort((a,b)=>b.data.localeCompare(a.data));
   return `<button class="btn suave bloco" style="margin-bottom:12px" onclick="receberSheet('${c.id}','${ymNow()}')">${ic('mais')}Registrar pagamento</button>`+(l.length?l.map(p=>`<button class="cartao" onclick="verRecibo('${p.id}')">${dataBloco(p.data)}<div class="cartao-txt"><h3>${brl(p.valor)} <span class="meta">· ${esc(p.forma)}</span></h3><div class="meta ell">${p.ref?'Mensalidade '+mesNome(p.ref):esc(p.descricao||'Serviço avulso')}</div></div><span class="selo">nº ${numRecibo(p)}</span></button>`).join(''):vazio('Sem pagamentos','Os recibos gerados aparecem aqui.'));}
@@ -1031,22 +1310,22 @@ function salvarPag(cid){const c=cid?cli(cid):null;const ref=$('#pRef')?$('#pRef'
   const pagador=c?c.nome:($('#pNome')?.value||'').trim();if(!pagador)return toast('Informe quem pagou');
   const p={id:uid(),num:DB.seqRecibo++,clienteId:c?.id||null,pagador,ref:ref||null,descricao:ref?null:(($('#pDesc')?.value||'').trim()||'serviço de limpeza de piscina'),valor,forma:$('#pForma').value,data:$('#pData').value||isoDate(new Date())};
   DB.pagamentos.push(p);save();closeSheet();render();verRecibo(p.id);toast('Pagamento registrado');}
-function textoRecibo(p){const ref=p.ref?`mensalidade de manutenção de piscina de ${mesNome(p.ref)}`:(p.descricao||'serviço de limpeza de piscina');
+function textoRecibo(p){let ref=p.ref?`mensalidade de manutenção de piscina de ${mesNome(p.ref)}`:(p.descricao||'serviço de limpeza de piscina');if(!p.ref&&/^[A-ZÀ-Ú][a-zà-ú]/.test(ref))ref=ref[0].toLowerCase()+ref.slice(1);
   return `Recebi de ${p.pagador} a importância de ${brl(p.valor)} (${extenso(p.valor)}), referente a ${ref}, ${p.forma==='Dinheiro'?'pago em dinheiro':'pago via '+p.forma}.`;}
 const numRecibo=p=>String(p.num).padStart(4,'0');
 function reciboHTML(p){const cfg=DB.cfg;
-  return `<div class="rhd">${cfg.logo?`<img src="${cfg.logo}" alt="">`:`<span style="width:48px;height:48px;flex:none;--ink:#1B241F;--ac:rgb(var(--acRGB))">${MARCA}</span>`}<div><div class="rnome">${esc(cfg.nome)}</div><div class="rmt">${[cfg.responsavel,cfg.cnpj?'CNPJ '+cfg.cnpj:'',cfg.tel].filter(Boolean).map(esc).join(' · ')}</div></div></div>
+  return `<div class="rhd"><span style="width:48px;height:48px;flex:none;--ink:#1B241F;--ac:rgb(var(--acRGB))">${MARCA}</span><div><div class="rnome">${esc(cfg.nome)}</div><div class="rmt">${[cfg.responsavel,cfg.cnpj?'CNPJ '+cfg.cnpj:'',cfg.tel].filter(Boolean).map(esc).join(' · ')}</div></div></div>
   <div class="rnum"><span>RECIBO Nº ${numRecibo(p)}</span><span class="rval">${brl(p.valor)}</span></div>
   <p style="line-height:1.65;margin:0 0 14px;font-size:.95rem">${esc(textoRecibo(p))}</p><p style="text-align:right;margin:0;font-size:.85rem">${esc((cfg.cidade?cfg.cidade+', ':'')+dataLonga(p.data))}.</p>
   <div class="rass"><div class="assin">${esc(cfg.responsavel||cfg.nome)}</div><hr><div style="font-size:.8rem">${esc(cfg.responsavel||cfg.nome)}</div>${cfg.cnpj?`<div class="rmt">CNPJ ${esc(cfg.cnpj)}</div>`:''}</div>`;}
 function verRecibo(id){const p=DB.pagamentos.find(x=>x.id===id);if(!p)return;
-  openSheet('Recibo nº '+numRecibo(p),`<div class="recibo">${reciboHTML(p)}</div><div class="dupla" style="margin-top:14px"><button class="btn" onclick="compartRecibo('${id}')">${ic('imagem')}Enviar imagem</button><button class="btn ghost" onclick="imprimirRecibo('${id}')">${ic('imprimir')}Imprimir / PDF</button></div><button class="btn ghost bloco" onclick="reciboWA('${id}')">${ic('conversa')}Texto no WhatsApp</button><button class="btn perigo bloco" onclick="excluirPag('${id}')">${ic('lixo')}Excluir recibo</button>${DB.cfg.cnpj&&DB.cfg.responsavel?'':'<p class="dica">Dica: preencha seu nome e o CNPJ em Ajustes para aparecerem no recibo.</p>'}`);}
+  openSheet('Recibo nº '+numRecibo(p),`<div class="recibo">${reciboHTML(p)}</div><div class="dupla" style="margin-top:14px"><button class="btn" onclick="compartRecibo('${id}')">${ic('imagem')}Enviar imagem</button><button class="btn ghost" onclick="imprimirRecibo('${id}')">${ic('imprimir')}Imprimir / PDF</button></div><button class="btn ghost bloco" onclick="reciboWA('${id}')">${ic('conversa')}Texto no WhatsApp</button><div class="dupla" style="margin-top:8px"><button class="btn ghost" onclick="editarRecibo('${id}')">${ic('lapis')}Editar</button><button class="btn perigo" onclick="excluirPag('${id}')">${ic('lixo')}Excluir</button></div>${DB.cfg.cnpj&&DB.cfg.responsavel?'':'<p class="dica">Dica: preencha seu nome e o CNPJ em Ajustes para aparecerem no recibo.</p>'}`);}
 function imprimirRecibo(id){const p=DB.pagamentos.find(x=>x.id===id);$('#printArea').innerHTML=`<div class="recibo" style="max-width:640px;margin:24px auto">${reciboHTML(p)}</div>`;
   document.body.classList.add('printing');window.addEventListener('afterprint',()=>document.body.classList.remove('printing'),{once:true});window.print();}
 async function gerarReciboImg(p){await fontesProntas();const cfg=DB.cfg;const W=1080,P=70;const AC=acForte(),INK='#1B241F',INK2='#5E6B62';
   const cv=document.createElement('canvas');cv.width=W;cv.height=2200;const x=cv.getContext('2d');
   x.fillStyle='#fff';x.fillRect(0,0,W,2200);x.fillStyle=AC;x.fillRect(0,0,W,16);
-  let y=66,tx=P+160;if(cfg.logo){try{await drawLogo(x,P,y,128);}catch(e){drawMarca(x,P,y,128,AC,INK);}}else drawMarca(x,P,y,128,AC,INK);
+  let y=66,tx=P+160;drawMarca(x,P,y,128,AC,INK);
   x.fillStyle=INK;x.font=`700 74px ${FD}`;x.fillText(cfg.nome||'',tx,y+66,W-tx-P);x.fillStyle=INK2;x.font=`600 27px ${FONT}`;
   const info=[cfg.responsavel,cfg.cnpj?'CNPJ '+cfg.cnpj:'',cfg.tel].filter(Boolean).join(' · ');if(info)y=wrap(x,info,tx,y+110,W-tx-P,36)-110;
   y+=176;x.fillStyle=AC;x.fillRect(P,y,W-2*P,5);y+=90;
@@ -1062,6 +1341,21 @@ async function gerarReciboImg(p){await fontesProntas();const cfg=DB.cfg;const W=
 async function compartRecibo(id){const p=DB.pagamentos.find(x=>x.id===id);try{const b=await gerarReciboImg(p);compartilharBlob(b,`recibo-${numRecibo(p)}.jpg`,`Recibo nº ${numRecibo(p)} · ${brl(p.valor)}`);}catch(e){console.error(e);toast('Erro ao gerar o recibo');}}
 function reciboWA(id){const p=DB.pagamentos.find(x=>x.id===id);const c=cli(p.clienteId);
   const t=`Olá ${primeiro(p.pagador)}! Confirmo o recebimento.\n\n🧾 Recibo nº ${numRecibo(p)}\n${textoRecibo(p)}\n\nObrigado!\n${DB.cfg.responsavel||DB.cfg.nome}${DB.cfg.cnpj?'\nCNPJ '+DB.cfg.cnpj:''}`;window.open(waLink(c?.tel,t),'_blank');}
+function editarRecibo(id){const p=DB.pagamentos.find(x=>x.id===id);if(!p)return;const c=cli(p.clienteId);
+  const meses=[];if(c&&!p.agendaId){for(let k=-6;k<=2;k++)meses.push(addMes(ymNow(),k));if(p.ref&&!meses.includes(p.ref))meses.unshift(p.ref);}
+  openSheet('Editar recibo nº '+numRecibo(p),`<div class="dupla"><label class="bloco"><span class="rotulo">Número</span><input id="eNum" inputmode="numeric" value="${p.num}"></label><label class="bloco"><span class="rotulo">Data</span><input type="date" id="eData" value="${p.data}"></label></div>
+  <label class="bloco"><span class="rotulo">Recebi de</span><input id="ePag" value="${esc(p.pagador)}"></label>
+  ${meses.length?`<label class="bloco"><span class="rotulo">Referente a</span><select id="eRef" onchange="$('#eDescW').style.display=this.value?'none':''">${meses.map(m=>`<option value="${m}" ${m===p.ref?'selected':''}>Mensalidade ${mesNome(m)}</option>`).join('')}<option value="" ${p.ref?'':'selected'}>Outro serviço</option></select></label>`:''}
+  <label class="bloco" id="eDescW" style="${p.ref?'display:none':''}"><span class="rotulo">Descrição do serviço</span><input id="eDesc" value="${esc(p.descricao||'')}" placeholder="Ex.: limpeza pesada de piscina verde"></label>
+  <div class="dupla"><label class="bloco"><span class="rotulo">Valor (R$)</span><input id="eVal" inputmode="decimal" value="${numIn(p.valor)}"></label><label class="bloco"><span class="rotulo">Forma</span><select id="eForma">${FORMAS.map(f=>`<option ${f===p.forma?'selected':''}>${f}</option>`).join('')}</select></label></div>
+  <button class="btn bloco" style="margin-top:6px" onclick="salvarRecibo('${id}')">${ic('check')}Salvar recibo</button><button class="btn ghost bloco" onclick="verRecibo('${id}')">Cancelar</button>`);}
+function salvarRecibo(id){const p=DB.pagamentos.find(x=>x.id===id);if(!p)return;const valor=num($('#eVal').value);if(!valor)return toast('Informe o valor');
+  const n=parseInt($('#eNum').value);if(!(n>0))return toast('Número inválido');if(n!==p.num&&DB.pagamentos.some(x=>x.id!==id&&x.num===n)&&!confirm(`Já existe um recibo nº ${String(n).padStart(4,'0')}. Usar mesmo assim?`))return;
+  const pag=$('#ePag').value.trim();if(!pag)return toast('Informe quem pagou');
+  const ref=$('#eRef')?$('#eRef').value:null;if(ref&&p.clienteId&&DB.pagamentos.some(x=>x.id!==id&&x.clienteId===p.clienteId&&x.ref===ref)&&!confirm(`Já existe outro pagamento de ${mesNome(ref)} para este cliente. Salvar mesmo assim?`))return;
+  Object.assign(p,{num:n,data:$('#eData').value||p.data,pagador:pag,valor,forma:$('#eForma').value});
+  if($('#eRef')){p.ref=ref||null;}p.descricao=p.ref?null:($('#eDesc').value.trim()||'serviço de limpeza de piscina');
+  DB.seqRecibo=Math.max(DB.seqRecibo,n+1);save();render();verRecibo(id);toast('Recibo atualizado');}
 function excluirPag(id){if(!confirm('Excluir este pagamento e o recibo?'))return;DB.pagamentos=DB.pagamentos.filter(p=>p.id!==id);save();closeSheet();render();toast('Pagamento excluído');}
 function cobrar(cid,ym){const c=cli(cid);const st=statusMes(c,ym);const cfg=DB.cfg;const [y,m]=ym.split('-').map(Number);const venc=`${pad(Math.min(c.venc||10,diasNoMes(y,m)))}/${pad(m)}`;
   let t=`Olá ${primeiro(c.nome)}! Tudo bem? ${st==='atrasado'?`Consta em aberto a mensalidade da manutenção da piscina de ${mesNome(ym)}`:`Passando para lembrar da mensalidade da manutenção da piscina de ${mesNome(ym)}`}, no valor de ${brl(c.mensal)} (vencimento ${venc}).`;
@@ -1074,9 +1368,12 @@ VIEWS.config=()=>{document.title='Ajustes';const c=DB.cfg;
   V(cab('Ajustes')+
   `<div class="secao" style="margin-top:0">${secTopo('Conta e nuvem')}${contaHTML()}</div>
   <div class="secao">${secTopo('Seu negócio',`<span class="meta">vai nos recibos e cards</span>`)}<div class="cartao lista">
-  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px"><div class="logo-box">${c.logo?`<img src="${c.logo}" alt="">`:MARCA}</div><div><button class="btn mini suave" onclick="$('#logoIn').click()">${ic('imagem')}Enviar logo</button>${c.logo?` <button class="btn mini perigo" onclick="DB.cfg.logo='';save();aplicaTema();render()">Remover</button>`:''}<p class="dica">Sem logo, usamos o ícone do app.</p></div><input type="file" id="logoIn" accept="image/*" hidden onchange="trocarLogo(this)"></div>
   ${cfgIn('nome','Nome do negócio')}${cfgIn('responsavel','Seu nome (assina o recibo)')}${cfgIn('cnpj','CNPJ do MEI','numeric')}${cfgIn('tel','Telefone / WhatsApp','tel')}${cfgIn('cidade','Cidade (vai no recibo e na rota do Maps)')}${cfgIn('pix','Chave Pix (vai na cobrança)')}${cfgIn('pixNome','Titular do Pix')}
   <button class="btn bloco" style="margin-top:4px" onclick="salvarCfg()">${ic('check')}Salvar dados</button></div></div>
+  <div class="secao">${secTopo('Checklist do serviço')}<div class="cartao lista"><p class="dica" style="margin:0 0 10px">Um item por linha. Aparece na visita para marcar, no resumo do WhatsApp, no card e no relatório.</p>
+  <textarea id="gChk" rows="7">${esc((c.checklist||[]).join('\n'))}</textarea>
+  <label class="troca" style="margin-top:10px"><input type="checkbox" id="gEtapas" ${c.visitaEtapas!==false?'checked':''} onchange="DB.cfg.visitaEtapas=this.checked;save()"> Preencher a visita em etapas</label>
+  <button class="btn bloco" style="margin-top:12px" onclick="DB.cfg.checklist=$('#gChk').value.split('\n').map(x=>x.trim()).filter(Boolean);save();toast('Checklist salvo')">${ic('check')}Salvar checklist</button></div></div>
   <div class="secao">${secTopo('Referências de dosagem')}<div class="cartao lista"><p class="dica" style="margin:0 0 12px">Valores médios de fabricantes. Confira o rótulo dos produtos que você usa e ajuste aqui: a calculadora passa a usar os seus números.</p>
   ${FAT_DEF.map(([k,l,u])=>`<label class="bloco"><span class="rotulo">${l}${u?' ('+u+')':''}</span><input id="f_${k}" inputmode="decimal" value="${numIn(c.fat[k])}"></label>`).join('')}
   <div class="dupla" style="margin-top:4px"><button class="btn ghost" onclick="restaurarFat()">Restaurar padrão</button><button class="btn" onclick="salvarFat()">Salvar</button></div></div></div>
@@ -1089,9 +1386,6 @@ function mudaModo(m){DB.cfg.modo=m;save();aplicaTema();}
 function salvarCfg(){['nome','responsavel','cnpj','tel','cidade','pix','pixNome'].forEach(k=>DB.cfg[k]=$('#g_'+k).value.trim());if(!DB.cfg.nome)DB.cfg.nome='Polidoro';save();aplicaTema();toast('Dados salvos');}
 function salvarFat(){FAT_DEF.forEach(([k])=>{const v=num($('#f_'+k).value);if(v!=null&&v>=0)DB.cfg.fat[k]=v;});save();toast('Referências salvas');render();}
 function restaurarFat(){if(!confirm('Voltar todas as referências para o padrão?'))return;DB.cfg.fat=Object.assign({},DEF_CFG.fat);save();render();toast('Padrão restaurado');}
-async function trocarLogo(inp){const f=inp.files[0];if(!f)return;try{const u=URL.createObjectURL(f);const img=await carregarImg(u);URL.revokeObjectURL(u);
-  const s=Math.min(1,320/Math.max(img.naturalWidth,img.naturalHeight));const cv=document.createElement('canvas');cv.width=Math.round(img.naturalWidth*s);cv.height=Math.round(img.naturalHeight*s);
-  cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);DB.cfg.logo=cv.toDataURL('image/png');save();aplicaTema();render();toast('Logo salva');}catch(e){toast('Não consegui ler a imagem');}}
 async function exportar(comFotos){try{const d={app:'polidoro',versao:1,exportado:agoraISO(),db:DB};
   if(comFotos){toast('Preparando backup…');const fs=await idbGetAll();d.fotos=[];for(const f of fs){const {blob,...r}=f;d.fotos.push({...r,b64:await blobToDataURL(blob)});}}
   baixarBlob(new Blob([JSON.stringify(d)],{type:'application/json'}),`backup-polidoro-${isoDate(new Date())}${comFotos?'-com-fotos':''}.json`);}catch(e){toast('Erro no backup: '+e.message);}}
@@ -1103,7 +1397,7 @@ async function apagarTudo(){if(Nuvem.user){sairSheet();return;}if(!confirm('Apag
   localStorage.removeItem(KEY);try{await idbClear();}catch(e){}DB=load();aplicaTema();tab('inicio');toast('Dados apagados');}
 
 /* ============ NUVEM (Firebase: login + sincronização) ============ */
-const COLS=['clientes','visitas','estoque','movs','pagamentos'];
+const COLS=['clientes','visitas','estoque','movs','pagamentos','agenda'];
 const META_KEY='polidoro_nuvem';
 const Nuvem={on:false,user:null,auth:null,fs:null,subs:[],busy:false,timer:null,erro:'',ultima:null,esperando:null,renderPend:false};
 const metaVazia=()=>({uid:null,snap:{},pend:{},fp:{},last:{}});
@@ -1112,7 +1406,7 @@ function salvaMeta(){try{localStorage.setItem(META_KEY,JSON.stringify(META));}ca
 const hashStr=s=>{let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h)^s.charCodeAt(i);return (h>>>0).toString(36)+'.'+s.length.toString(36);};
 const semM=(k,v)=>(k==='_m'||k==='_s')?undefined:v;
 const hashItem=o=>hashStr(JSON.stringify(o,semM));
-function cfgItem(){const {modo,...c}=DB.cfg;return {cfg:c,seqRecibo:DB.seqRecibo,_m:DB.cfgM||0};}
+function cfgItem(){const {modo,modoV,logo,...c}=DB.cfg;return {cfg:c,seqRecibo:DB.seqRecibo,_m:DB.cfgM||0};}
 const nuvemConfigurada=()=>!!(window.firebase&&FIREBASE_CONFIG.apiKey&&!/COLE_AQUI/.test(FIREBASE_CONFIG.apiKey));
 const logado=()=>!!(Nuvem.on&&Nuvem.user&&META.uid===Nuvem.user.uid);
 const pendentes=()=>Object.keys(META.pend).length+Object.keys(META.fp).length;
@@ -1177,7 +1471,7 @@ function ouvir(){pararOuvir();if(!logado())return;
 function pararOuvir(){Nuvem.subs.forEach(u=>{try{u();}catch(e){}});Nuvem.subs=[];}
 function aplicarRemoto(col,id,d){const key=col+'/'+id;const pm=META.pend[key];
   if(pm!=null&&Math.abs(pm)>=(d._m||0))return false;
-  if(col==='cfg'){if(!d.cfg)return false;const modo=DB.cfg.modo;DB.cfg=Object.assign({},DEF_CFG,d.cfg,{modo});DB.cfg.fat=Object.assign({},DEF_CFG.fat,d.cfg.fat||{});
+  if(col==='cfg'){if(!d.cfg)return false;const modo=DB.cfg.modo;DB.cfg=Object.assign({},DEF_CFG,d.cfg,{modo,modoV:2});delete DB.cfg.logo;DB.cfg.fat=Object.assign({},DEF_CFG.fat,d.cfg.fat||{});
     DB.seqRecibo=Math.max(DB.seqRecibo||1,d.seqRecibo||1);DB.cfgM=d._m||0;(META.snap.cfg=META.snap.cfg||{}).main=hashItem(cfgItem());delete META.pend[key];return true;}
   const arr=DB[col];const i=arr.findIndex(x=>x.id===id);const loc=i>=0?arr[i]:null;const snap=META.snap[col]||(META.snap[col]={});
   if(loc&&pm==null&&(loc._m||0)>(d._m||0))return false;
@@ -1209,10 +1503,10 @@ async function iniciarSync(user){Nuvem.user=user;Nuvem.on=true;Nuvem.erro='';atu
     try{temRemoto=!(await base.collection('clientes').limit(1).get()).empty||!(await base.collection('cfg').limit(1).get()).empty;
       if(temRemoto)estRem=(await base.collection('estoque').get()).docs.map(x=>x.data()).filter(x=>!x._del);}
     catch(e){console.error(e);Nuvem.erro=traduzErro(e);atualizaEstado();return;}
-    const temLocal=DB.clientes.length>0||DB.visitas.length>0||DB.pagamentos.length>0;
+    const temLocal=DB.clientes.length>0||DB.visitas.length>0||DB.pagamentos.length>0||DB.agenda.length>0;
     let modo='juntar';if(temRemoto&&temLocal)modo=await perguntarJuncao();else if(temRemoto)modo='nuvem';
     META=metaVazia();META.uid=user.uid;
-    if(modo==='nuvem'){const m=DB.cfg.modo;DB=migrate({cfg:{modo:m}});DB.estoque=[];saveLocal();try{await idbClear();}catch(e){}META.snap.cfg={main:hashItem(cfgItem())};}
+    if(modo==='nuvem'){const m=DB.cfg.modo;DB=migrate({cfg:{modo:m,modoV:2}});DB.estoque=[];saveLocal();try{await idbClear();}catch(e){}META.snap.cfg={main:hashItem(cfgItem())};}
     else{if(temRemoto){META.snap.cfg={main:hashItem(cfgItem())};
         const porNome=new Map(estRem.map(x=>[String(x.nome||'').toLowerCase().trim(),x]));const troca={};
         DB.estoque=DB.estoque.filter(it=>{const r=porNome.get(String(it.nome||'').toLowerCase().trim());if(r){troca[it.id]=r.id;return false;}return true;});
@@ -1241,7 +1535,7 @@ function sairSheet(){const p=pendentes();
   <button class="btn perigo bloco" onclick="sairConta(true)">${ic('lixo')}Sair e limpar este aparelho</button><p class="dica" style="margin:4px 4px 0">Para celular emprestado. Os dados continuam salvos na nuvem.</p>`);}
 async function sairConta(limpar){if(limpar&&pendentes()&&!confirm('Ainda há alterações não enviadas. Limpar mesmo assim?'))return;closeSheet();
   pararSync();try{await Nuvem.auth.signOut();}catch(e){}
-  if(limpar){const m=DB.cfg.modo;META=metaVazia();salvaMeta();localStorage.removeItem(KEY);try{await idbClear();}catch(e){}DB=migrate({cfg:{modo:m}});saveLocal();aplicaTema();}
+  if(limpar){const m=DB.cfg.modo;META=metaVazia();salvaMeta();localStorage.removeItem(KEY);try{await idbClear();}catch(e){}DB=migrate({cfg:{modo:m,modoV:2}});saveLocal();aplicaTema();}
   toast(limpar?'Você saiu e este aparelho foi limpo':'Você saiu da conta');tab('inicio');}
 function sincronizarAgora(){if(!logado())return;Nuvem.erro='';detectarMudancas();saveLocal();salvaMeta();ouvir();enviar();toast('Sincronizando…');}
 

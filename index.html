@@ -305,6 +305,7 @@ html[data-modo=escuro] .recibo .rhd{border-color:rgb(var(--acRGB))}
 .stepper button{flex:none;width:38px;height:44px;border-radius:12px;background:var(--surf);border:var(--borda);font-size:1.35rem;font-weight:700;color:var(--ac);line-height:1}
 .stepper button:active{background:var(--ac2)}
 .etapa.oculta{display:none}
+.cid-uf{display:grid;grid-template-columns:1fr 92px;gap:10px}
 .etapas-prog{margin:-4px 2px 14px}.etapas-barra{display:flex;gap:6px;margin-bottom:6px}.etapas-barra button{flex:1;height:7px;border-radius:9px;background:var(--surf2);border:0}
 .etapas-barra button.feita{background:color-mix(in srgb,var(--ac) 55%,transparent)}.etapas-barra button.atual{background:var(--ac)}
 .etapa-nav{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}.etapa-nav .btn{padding:14px 18px;font-size:1rem}
@@ -493,7 +494,24 @@ const item=id=>DB.estoque.find(i=>i.id===id);
 const visitasCli=cid=>DB.visitas.filter(v=>v.clienteId===cid).sort((a,b)=>b.data.localeCompare(a.data));
 const visitaDoDia=(cid,data)=>DB.visitas.find(v=>v.clienteId===cid&&v.data.slice(0,10)===data);
 const naRota=dow=>DB.clientes.filter(c=>c.ativo!==false&&(c.dias||[]).includes(dow)).sort((a,b)=>(a.ordem||0)-(b.ordem||0));
-const enderecoCompleto=c=>[c.endereco,c.bairro,DB.cfg.cidade].filter(Boolean).join(', ');
+const UFS=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+const cidadeUF=c=>c.cidade?c.cidade+(c.uf?' - '+c.uf:''):(DB.cfg.cidade||'');
+const enderecoCompleto=c=>[c.endereco,c.bairro,cidadeUF(c),c.cep].filter(Boolean).join(', ');
+const fmtCEP=v=>{const d=soDig(v).slice(0,8);return d.length>5?d.slice(0,5)+'-'+d.slice(5):d;};
+/* campos de endereço reaproveitados no cadastro do cliente e no avulso (prefixo dos ids) */
+function camposEndereco(pf,c){
+  return `<div class="dupla"><label class="bloco"><span class="rotulo">CEP <span style="text-transform:none;letter-spacing:0;font-weight:600">(opcional)</span></span><input id="${pf}Cep" inputmode="numeric" placeholder="00000-000" value="${esc(c.cep||'')}" oninput="this.value=fmtCEP(this.value);if(soDig(this.value).length===8)buscarCEP('${pf}')"></label><div class="bloco"><span class="rotulo">&nbsp;</span><p class="dica" id="${pf}CepInfo" style="margin:10px 2px 0">Preenche rua, bairro e cidade.</p></div></div>
+  <label class="bloco"><span class="rotulo">Endereço (rua e número)</span><input id="${pf}End" value="${esc(c.endereco||'')}"></label>`;}
+function camposCidade(pf,c){const cp={cidade:c.cidade||'',uf:c.uf||''};
+  return `<div class="cid-uf"><label class="bloco"><span class="rotulo">Cidade</span><input id="${pf}Cid" value="${esc(cp.cidade)}"></label><label class="bloco"><span class="rotulo">UF</span><select id="${pf}UF"><option value=""></option>${UFS.map(u=>`<option ${u===cp.uf?'selected':''}>${u}</option>`).join('')}</select></label></div>`;}
+async function buscarCEP(pf){const cep=soDig($('#'+pf+'Cep').value);const info=$('#'+pf+'CepInfo');if(cep.length!==8)return;info.textContent='Buscando…';
+  try{const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);const d=await r.json();if(d.erro)throw 0;
+    const end=$('#'+pf+'End');if(d.logradouro&&!/\d/.test(end.value))end.value=d.logradouro+(end.value.trim()?' '+end.value.trim():', ');
+    const bai=$('#'+pf+'Bai');if(bai&&d.bairro&&!bai.value.trim())bai.value=d.bairro;
+    if(d.localidade)$('#'+pf+'Cid').value=d.localidade;if(d.uf)$('#'+pf+'UF').value=d.uf;
+    info.textContent='Endereço encontrado. Confira o número.';end.focus();end.setSelectionRange(end.value.length,end.value.length);}
+  catch(e){info.textContent=navigator.onLine?'CEP não encontrado. Preencha à mão.':'Sem internet: preencha à mão.';}}
+const lerEndereco=pf=>({cep:fmtCEP($('#'+pf+'Cep').value),endereco:$('#'+pf+'End').value.trim(),cidade:$('#'+pf+'Cid').value.trim(),uf:$('#'+pf+'UF').value});
 function waLink(tel,txt){let d=soDig(tel).replace(/^0+/,'');if(d&&d.length<=11)d='55'+d;return 'https://wa.me/'+d+'?text='+encodeURIComponent(txt);}
 
 /* ============ tema ============ */
@@ -767,8 +785,9 @@ VIEWS.agendaForm=p=>{const a=p.id?DB.agenda.find(x=>x.id===p.id):null;if(p.id&&!
   <div id="agNovo" style="${ed.clienteId?'display:none':''}">
   <label class="bloco"><span class="rotulo">Nome *</span><input id="agNome"></label>
   <label class="bloco"><span class="rotulo">WhatsApp / telefone</span><input id="agTel" inputmode="tel" placeholder="(44) 99999-9999"></label>
-  <label class="bloco"><span class="rotulo">Endereço (rua e número)</span><input id="agEnd"></label>
+  ${camposEndereco('ag',{})}
   <div class="dupla"><label class="bloco"><span class="rotulo">Bairro</span><input id="agBai"></label><label class="bloco"><span class="rotulo">Volume (m³)</span><input id="agM3" inputmode="decimal"></label></div>
+  ${camposCidade('ag',{})}
   <p class="dica">O cliente fica salvo, sem dias fixos, para agendar de novo quando precisar.</p></div></div></div>
   <div class="secao">${secTopo('Quando e o quê')}<div class="cartao lista">
   <div class="dupla"><label class="bloco"><span class="rotulo">Data</span><input type="date" id="agData" value="${ed.data}"></label><label class="bloco"><span class="rotulo">Horário</span><input type="time" id="agHora" value="${ed.hora||''}"></label></div>
@@ -786,7 +805,7 @@ VIEWS.agendaForm=p=>{const a=p.id?DB.agenda.find(x=>x.id===p.id):null;if(p.id&&!
   V(h);};
 function salvarAgenda(id){let cid=$('#agCli').value;const data=$('#agData').value;if(!data)return toast('Escolha a data');
   if(!cid){const nome=$('#agNome').value.trim();if(!nome)return toast('Escolha o cliente ou digite o nome');
-    const c={id:uid(),criado:agoraISO(),desde:ymNow(),ordem:Math.max(0,...DB.clientes.map(x=>x.ordem||0))+1,nome,tel:$('#agTel').value.trim(),endereco:$('#agEnd').value.trim(),bairro:$('#agBai').value.trim(),rota:'',dias:[],formato:'ret',med:{},m3:num($('#agM3').value),mensal:0,venc:10,obs:'',ativo:true,tipo:'avulso'};
+    const c={id:uid(),criado:agoraISO(),desde:ymNow(),ordem:Math.max(0,...DB.clientes.map(x=>x.ordem||0))+1,nome,tel:$('#agTel').value.trim(),...lerEndereco('ag'),bairro:$('#agBai').value.trim(),rota:'',dias:[],formato:'ret',med:{},m3:num($('#agM3').value),mensal:0,venc:10,obs:'',ativo:true,tipo:'avulso'};
     DB.clientes.push(c);cid=c.id;}
   let a=id?DB.agenda.find(x=>x.id===id):null;const novo=!a;if(novo){a={id:uid(),criado:agoraISO(),status:'agendado'};DB.agenda.push(a);}
   if(!novo&&a.data!==data)delete a.pos;
@@ -963,8 +982,9 @@ VIEWS.clienteForm=p=>{const c=p.id?cli(p.id):{dias:[],formato:'ret',venc:10,ativ
   `<div class="secao" style="margin-top:0">${secTopo('Dados')}<div class="cartao lista">
   <label class="bloco"><span class="rotulo">Nome *</span><input id="cNome" value="${esc(c.nome||'')}"></label>
   <label class="bloco"><span class="rotulo">WhatsApp / telefone</span><input id="cTel" inputmode="tel" placeholder="(44) 99999-9999" value="${esc(c.tel||'')}"></label>
-  <label class="bloco"><span class="rotulo">Endereço (rua e número)</span><input id="cEnd" value="${esc(c.endereco||'')}"></label>
+  ${camposEndereco('c',c)}
   <div class="dupla"><label class="bloco"><span class="rotulo">Bairro</span><input id="cBai" value="${esc(c.bairro||'')}"></label><label class="bloco"><span class="rotulo">Rota / região</span><input id="cRota" list="dlRotas" placeholder="Centro, Praia…" value="${esc(c.rota||'')}"><datalist id="dlRotas">${rotas.map(r=>`<option value="${esc(r)}">`).join('')}</datalist></label></div>
+  ${camposCidade('c',c)}
   <div class="bloco"><span class="rotulo">Dias de visita</span><div class="chips" id="cDias">${DIAS.map((d,i)=>`<button type="button" class="chip ${(c.dias||[]).includes(i)?'on':''}" data-d="${i}" onclick="this.classList.toggle('on')">${cap(d)}</button>`).join('')}</div></div></div></div>
   <div class="secao">${secTopo('Cubagem da piscina')}<div class="cartao lista">
   <label class="bloco"><span class="rotulo">Formato</span><select id="cFor" onchange="cubForm()">${[['ret','Retangular'],['red','Redonda'],['oval','Oval']].map(([k,l])=>`<option value="${k}" ${c.formato===k?'selected':''}>${l}</option>`).join('')}</select></label>
@@ -981,7 +1001,7 @@ function cubForm(init){const f=$('#cFor').value;$('#lC').textContent=f==='red'?'
   else $('#cubInfo').textContent='Preencha as medidas para calcular, ou digite o volume direto.';}
 function salvarCliente(id){const nome=$('#cNome').value.trim();if(!nome)return toast('Informe o nome do cliente');let c=id?cli(id):null;const novo=!c;
   if(novo){c={id:uid(),criado:agoraISO(),desde:ymNow(),ordem:Math.max(0,...DB.clientes.map(x=>x.ordem||0))+1};DB.clientes.push(c);}
-  Object.assign(c,{nome,tel:$('#cTel').value.trim(),endereco:$('#cEnd').value.trim(),bairro:$('#cBai').value.trim(),rota:$('#cRota').value.trim(),
+  Object.assign(c,{nome,tel:$('#cTel').value.trim(),...lerEndereco('c'),bairro:$('#cBai').value.trim(),rota:$('#cRota').value.trim(),
     dias:$$('#cDias .chip.on').map(b=>+b.dataset.d),formato:$('#cFor').value,
     med:{c:num($('#cC').value),l:num($('#cL').value),pr:num($('#cPr').value),pf:num($('#cPf').value)},m3:num($('#cM3').value),
     mensal:num($('#cMen').value)||0,venc:Math.min(31,Math.max(1,parseInt($('#cVen').value)||10)),obs:$('#cObs').value.trim(),ativo:$('#cAtivo').checked});

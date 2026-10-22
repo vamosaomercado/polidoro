@@ -50,7 +50,7 @@ Pronto: em **Ajustes → Conta e nuvem** aparece *Entrar com o Google* e *e-mail
 
 ### Como a sincronização funciona
 
-- Os dados de cada conta ficam em `contas/{id da conta}/…` no Firestore, separados por clientes, visitas, estoque, movimentações, pagamentos, configurações e fotos. As regras só deixam cada conta ler e gravar o que é dela.
+- Os dados de cada conta ficam em `contas/{id da conta}/…` no Firestore, separados por clientes, agenda de avulsos, visitas, estoque, movimentações, pagamentos, configurações e fotos. As regras só deixam cada conta ler e gravar o que é dela.
 - O app grava primeiro no celular e depois manda para a nuvem. Sem internet, guarda a fila e envia quando a conexão voltar (o painel mostra "Salvo na nuvem" ou "Sem internet · N alterações aguardando").
 - Em outro celular, é só entrar com a **mesma conta**: tudo é baixado e as mudanças passam de um aparelho para o outro em segundos.
 - Se o celular já tinha dados antes de entrar numa conta que também tem dados, o app pergunta se quer **juntar os dois** ou **usar só os da nuvem**.
@@ -68,4 +68,4 @@ Quem estiver com o app aberto vê o aviso **"Nova versão do Polidoro pronta —
 
 ## Atalhos do app instalado
 
-Segurando o ícone do Polidoro na tela inicial (Android) aparecem atalhos para **Rota**, **Calcular**, **Estoque** e **Financeiro**. Os links também funcionam direto: `./?abrir=hoje`, `./?abrir=calc`, `./?abrir=estoque`, `./?abrir=financeiro`.
+Segurando o ícone do Polidoro na tela inicial (Android) aparecem atalhos para **Agenda**, **Calcular**, **Estoque** e **Financeiro**. Os links também funcionam direto: `./?abrir=hoje`, `./?abrir=calc`, `./?abrir=estoque`, `./?abrir=financeiro`.

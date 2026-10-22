@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-modo="escuro">
+<html lang="pt-BR" data-modo="claro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0F1720">
+<meta name="theme-color" content="#ECF0F3">
 <title>Instalar o Polidoro - Limpeza de Piscinas</title>
 <meta name="description" content="Instale o Polidoro no seu celular: rotas do dia, dosagens, estoque, fotos e recibos para quem limpa piscinas.">
 <meta property="og:title" content="Polidoro - Limpeza de Piscinas">
@@ -16,9 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script>
-/* usa o mesmo modo (claro/escuro) escolhido no app; se não houver, segue o celular */
+/* usa o mesmo modo (claro/escuro) escolhido no app; se não houver, abre no claro */
 (function(){var m=null;try{var d=JSON.parse(localStorage.getItem('polidoro_v1'));m=d&&d.cfg&&d.cfg.modo;}catch(e){}
-if(!m)m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'claro':'escuro';document.documentElement.dataset.modo=m;})();
+if(!m)m='claro';document.documentElement.dataset.modo=m;})();
 </script>
 <style>
 html{--acRGB:36,98,188;--ac:rgb(var(--acRGB));--ac-forte:#1A4787;--ac2:rgba(var(--acRGB),.10);--ac-ink:#fff;

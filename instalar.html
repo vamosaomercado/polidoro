@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-modo="escuro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0F1720">
+<title>Instalar o Polidoro - Limpeza de Piscinas</title>
+<meta name="description" content="Instale o Polidoro no seu celular: rotas do dia, dosagens, estoque, fotos e recibos para quem limpa piscinas.">
+<meta property="og:title" content="Polidoro - Limpeza de Piscinas">
+<meta property="og:description" content="Toque para instalar o app no seu celular.">
+<meta property="og:image" content="icons/icon-512.png">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script>
+/* usa o mesmo modo (claro/escuro) escolhido no app; se não houver, segue o celular */
+(function(){var m=null;try{var d=JSON.parse(localStorage.getItem('polidoro_v1'));m=d&&d.cfg&&d.cfg.modo;}catch(e){}
+if(!m)m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'claro':'escuro';document.documentElement.dataset.modo=m;})();
+</script>
+<style>
+html{--acRGB:36,98,188;--ac:rgb(var(--acRGB));--ac-forte:#1A4787;--ac2:rgba(var(--acRGB),.10);--ac-ink:#fff;
+  --ff:'Nunito',system-ui,sans-serif;--fd:'Caveat',cursive;
+  --bg:color-mix(in srgb, rgb(var(--acRGB)) 5%, #F7F8F6);--surf:#fff;--surf2:color-mix(in srgb, rgb(var(--acRGB)) 7%, #F0F3F1);
+  --ink:#14202E;--ink2:#536273;--linha:color-mix(in srgb, rgb(var(--acRGB)) 12%, #E1E6E3);
+  --ok:#1C7A4F;--alerta:#8F5300;--alerta2:#FFF4DE;
+  --sombra:0 1px 2px rgba(16,28,44,.04),0 4px 14px rgba(16,28,44,.06);--brilho:.10}
+html[data-modo=escuro]{--ac:color-mix(in srgb, rgb(var(--acRGB)) 70%, #ffffff);--ac2:rgba(var(--acRGB),.26);--ac-forte:var(--ac);--ac-ink:#10171a;
+  --bg:#0F1720;--surf:#17222E;--surf2:#1E2B39;--ink:#E8EEF5;--ink2:#9AAABB;--linha:#263445;--ok:#5FBF90;--alerta:#E7A54B;--alerta2:rgba(231,165,75,.15);
+  --sombra:0 2px 12px rgba(0,0,0,.3);--brilho:.18}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--ff);line-height:1.5;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(120% 55% at 50% -8%,rgba(var(--acRGB),var(--brilho)),transparent 70%);background-repeat:no-repeat}
+main{max-width:520px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top)) 18px calc(32px + env(safe-area-inset-bottom))}
+h1,h2,h3{margin:0;font-family:var(--fd);font-weight:700;line-height:1.05}
+p{margin:0}
+a{color:inherit}
+.topo{text-align:center;margin-bottom:22px}
+.topo img{width:104px;height:104px;border-radius:24px;box-shadow:0 10px 30px rgba(var(--acRGB),.35);display:block;margin:0 auto 14px}
+.topo h1{font-size:3.4rem}
+.eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;opacity:.6}
+.topo p.sub{margin-top:10px;font-size:1rem;color:var(--ink2)}
+.cartao{background:var(--surf);border:1px solid var(--linha);border-radius:20px;box-shadow:var(--sombra);padding:20px 18px;margin-bottom:16px}
+.cartao h2{font-size:2rem;margin-bottom:6px}
+.cartao>p{color:var(--ink2);font-size:.94rem}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px 20px;border:0;border-radius:999px;background:var(--ac);color:var(--ac-ink);font:inherit;font-weight:800;font-size:1.05rem;text-decoration:none;cursor:pointer;box-shadow:0 4px 16px rgba(var(--acRGB),.35);margin-top:16px}
+.btn.ghost{background:var(--surf);color:var(--ink);border:1px solid var(--linha);box-shadow:none;font-size:.95rem;padding:12px 18px}
+.btn svg{width:22px;height:22px}
+.passos{list-style:none;margin:16px 0 0;padding:0;counter-reset:p}
+.passos li{counter-increment:p;display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px dashed var(--linha);font-size:.95rem}
+.passos li:first-child{border-top:0;padding-top:4px}
+.passos li::before{content:counter(p);flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--ac2);color:var(--ac-forte);font-family:var(--fd);font-size:1.25rem;font-weight:700}
+.passos b{font-weight:800}
+.tecla{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;min-width:28px;height:26px;padding:0 6px;border-radius:8px;background:var(--surf2);border:1px solid var(--linha);margin:0 2px}
+.tecla svg{width:17px;height:17px}
+.aviso{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:16px;background:var(--alerta2);color:var(--alerta);font-size:.88rem;margin-top:14px}
+.aviso svg{width:18px;height:18px;flex:none;margin-top:1px}
+.carregando{display:flex;align-items:center;gap:12px;color:var(--ink2);font-size:.95rem;padding:6px 0}
+.carregando i{width:20px;height:20px;border-radius:50%;border:3px solid var(--ac2);border-top-color:var(--ac);animation:gira .8s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.ok-ico{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--ac2);color:var(--ac-forte);margin-bottom:12px}
+.ok-ico svg{width:30px;height:30px}
+.recursos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0 8px}
+.recurso{background:var(--surf);border:1px solid var(--linha);border-radius:18px;padding:14px;box-shadow:var(--sombra)}
+.recurso svg{width:26px;height:26px;color:var(--ac);margin-bottom:6px}
+.recurso b{display:block;font-size:.92rem;line-height:1.25}
+.recurso span{display:block;font-size:.78rem;color:var(--ink2);margin-top:3px;line-height:1.35}
+.secao-t{font-size:1.7rem;margin:26px 4px 0}
+.rodape{text-align:center;margin-top:22px;font-size:.86rem;color:var(--ink2)}
+.rodape a{color:var(--ac);font-weight:700}
+.credito{font-size:.72rem;opacity:.6;margin-top:10px}
+.copiado{font-size:.82rem;color:var(--ok);text-align:center;margin-top:8px;min-height:1.2em;font-weight:700}
+</style>
+</head>
+<body>
+<main>
+  <header class="topo">
+    <img src="icons/icon-192.png" alt="Ícone do Polidoro" width="104" height="104">
+    <div class="eyebrow">Limpeza de Piscinas</div>
+    <h1>Polidoro</h1>
+    <p class="sub">Rotas do dia, dosagens, estoque, fotos de antes e depois e recibos, tudo no seu celular.</p>
+  </header>
+
+  <section class="cartao" id="instalar" aria-live="polite">
+    <div class="carregando"><i></i>Preparando a instalação…</div>
+  </section>
+
+  <h2 class="secao-t">O que o app faz</h2>
+  <div class="recursos">
+    <div class="recurso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/></svg><b>Rota do dia</b><span>Piscinas na ordem, com mapa e navegação pelo Google Maps.</span></div>
+    <div class="recurso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3.5h6M10 3.5v5.3L5 18a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9.2V3.5"/><path d="M7.4 14h9.2"/></svg><b>Dosagem certa</b><span>pH, cloro, alcalinidade e dureza calculados pelo volume.</span></div>
+    <div class="recurso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg><b>Estoque do carro</b><span>Baixa automática e aviso na hora de repor.</span></div>
+    <div class="recurso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2L9.2 5h5.6l1.5 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="13" r="3.3"/></svg><b>Antes e depois</b><span>Fotos com data e hora, prova do serviço feito.</span></div>
+    <div class="recurso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-2.5-1.5L13 21l-2.5-1.5L8 21l-2-1.5z"/><path d="M9 8h6M9 11.7h6M9 15.4h3.5"/></svg><b>Recibos e cobrança</b><span>Recibo do MEI e lembrete com Pix pelo WhatsApp.</span></div>
+    <div class="recurso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18.5h10.2a4.1 4.1 0 0 0 .5-8.2 5.6 5.6 0 0 0-10.9-1.2A4.7 4.7 0 0 0 7 18.5z"/></svg><b>Salvo na nuvem</b><span>Funciona sem internet e sincroniza quando voltar.</span></div>
+  </div>
+
+  <footer class="rodape">
+    <p>Prefere não instalar? <a href="./">Usar no navegador</a></p>
+    <p class="credito">Polidoro · feito por Alan Correa</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var box=document.getElementById('instalar');
+  var ua=navigator.userAgent||'';
+  var isIOS=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  var isAndroid=/Android/i.test(ua);
+  var inApp=/FBAN|FBAV|FB_IAB|Instagram|Line\/|WhatsApp|MicroMessenger|TikTok|musical_ly|; wv\)/i.test(ua);
+  var iosSafari=isIOS&&/Safari/i.test(ua)&&!/CriOS|FxiOS|EdgiOS|OPiOS|GSA\//i.test(ua);
+  var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+  var deferred=null,estado='';
+
+  var I={
+    baixar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5V15M7.5 10.5 12 15l4.5-4.5"/><path d="M5 20h14"/></svg>',
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>',
+    abrir:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>',
+    link:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
+    alerta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.2 2.9 19.5h18.2z"/><path d="M12 10v4.4M12 17.1h.01"/></svg>',
+    menu:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>',
+    compartilhar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14.5V3.5M7.5 8 12 3.5 16.5 8"/><path d="M5 12.5v6.8A1.7 1.7 0 0 0 6.7 21h10.6a1.7 1.7 0 0 0 1.7-1.7v-6.8"/></svg>',
+    mais:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M12 8.5v7M8.5 12h7"/></svg>'
+  };
+  var t=function(svg){return '<span class="tecla">'+svg+'</span>';};
+  var linkBtn='<button class="btn ghost" id="copiar">'+I.link+'Copiar o link</button><p class="copiado" id="copiado"></p>';
+
+  var TELAS={
+    instalado:function(){return '<div class="ok-ico">'+I.check+'</div><h2>Tudo pronto!</h2><p>O Polidoro está instalado. Procure o ícone azul na tela inicial do celular.</p><a class="btn" href="./">'+I.abrir+'Abrir o Polidoro</a>';},
+    pronto:function(){return '<h2>Instalar no celular</h2><p>Leva só um toque. O app fica na tela inicial, abre em tela cheia e funciona sem internet.</p><button class="btn" id="btnInstalar">'+I.baixar+'Instalar o Polidoro</button>';},
+    android:function(){return '<h2>Instalar no Android</h2><p>Siga os passos no Chrome:</p><ol class="passos"><li><span>Toque no menu '+t(I.menu)+' no canto de cima, à direita.</span></li><li><span>Toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>.</span></li><li><span>Confirme em <b>Instalar</b>. O ícone do Polidoro aparece na tela inicial.</span></li></ol>'+(/Chrome\//.test(ua)&&!/EdgA|SamsungBrowser|OPR/.test(ua)?'':'<div class="aviso">'+I.alerta+'<p>Funciona melhor no <b>Google Chrome</b>. Se não achar a opção, abra este link no Chrome.</p></div>'+linkBtn);},
+    iosSafari:function(){return '<h2>Instalar no iPhone</h2><p>No Safari, siga os passos:</p><ol class="passos"><li><span>Toque em <b>Compartilhar</b> '+t(I.compartilhar)+' na barra de baixo (ou de cima, no iPad).</span></li><li><span>Role a lista e toque em <b>Adicionar à Tela de Início</b> '+t(I.mais)+'.</span></li><li><span>Toque em <b>Adicionar</b>. O ícone do Polidoro aparece na tela inicial.</span></li></ol>';},
+    iosOutro:function(){return '<h2>Abra no Safari</h2><p>No iPhone, a instalação funciona pelo <b>Safari</b>. Copie o link e cole na barra de endereço do Safari.</p>'+linkBtn+'<p style="font-size:.84rem;color:var(--ink2);margin-top:6px">Depois, no Safari: Compartilhar '+t(I.compartilhar)+' → <b>Adicionar à Tela de Início</b>.</p>';},
+    inApp:function(){return '<h2>Abra no navegador</h2><p>Este link abriu dentro de outro app (WhatsApp, Instagram…), que não deixa instalar.</p><ol class="passos"><li><span>Toque no menu '+t(I.menu)+' ou nos três pontinhos.</span></li><li><span>Escolha <b>'+(isIOS?'Abrir no Safari':'Abrir no Chrome')+'</b> ou <b>Abrir no navegador</b>.</span></li></ol>'+linkBtn;},
+    pc:function(){return '<h2>Instalar no computador</h2><p>No Chrome ou no Edge:</p><ol class="passos"><li><span>Clique no ícone de instalar '+t(I.baixar)+' no fim da barra de endereço,</span></li><li><span>ou abra o menu '+t(I.menu)+' e escolha <b>Instalar Polidoro</b>.</span></li></ol><div class="aviso">'+I.alerta+'<p>O Polidoro foi pensado para o <b>celular</b>. Abra este link no celular para levar o app para o dia a dia.</p></div>'+linkBtn;}
+  };
+
+  function mostrar(nome){if(estado==='instalado'&&nome!=='instalado')return;estado=nome;box.innerHTML=TELAS[nome]();
+    var bi=document.getElementById('btnInstalar');
+    if(bi)bi.onclick=function(){if(!deferred)return;deferred.prompt();deferred.userChoice.then(function(r){deferred=null;if(r&&r.outcome==='accepted')mostrar('instalado');else mostrar(isAndroid?'android':'pc');});};
+    var bc=document.getElementById('copiar');
+    if(bc)bc.onclick=function(){var url=location.href.replace(/instalar\.html.*$/,'instalar.html');var ok=function(){document.getElementById('copiado').textContent='Link copiado!';};
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(ok,function(){prompt('Copie o link:',url);});else prompt('Copie o link:',url);};}
+
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferred=e;if(estado!=='instalado'&&!inApp)mostrar('pronto');});
+  window.addEventListener('appinstalled',function(){deferred=null;mostrar('instalado');});
+
+  if(standalone)mostrar('instalado');
+  else if(inApp)mostrar('inApp');
+  else if(isIOS)mostrar(iosSafari?'iosSafari':'iosOutro');
+  else setTimeout(function(){if(!deferred&&!estado)mostrar(isAndroid?'android':'pc');},3500);
+
+  if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(function(){});
+})();
+</script>
+</body>
+</html>
